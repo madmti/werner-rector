@@ -1,11 +1,13 @@
 ---
-// EmailJS Configuration - Replace with your actual keys
 const EMAILJS_SERVICE_ID = "service_7aaej2g";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_TEMPLATE_ID = "template_kzkbct9";
+const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
 
 import gmailIcon from '@/assets/icons/gmail.svg';
 ---
+
+<!-- Hidden elements to pass config to client script -->
+<div id="emailjs-config" data-service-id={EMAILJS_SERVICE_ID} data-template-id={EMAILJS_TEMPLATE_ID} data-public-key={EMAILJS_PUBLIC_KEY} class="hidden"></div>
 
 <div id="email-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
   <!-- Backdrop -->
@@ -86,8 +88,14 @@ import gmailIcon from '@/assets/icons/gmail.svg';
 <script>
   import emailjs from '@emailjs/browser';
 
+  // Read config from hidden element
+  const config = document.getElementById('emailjs-config')!;
+  const SERVICE_ID = config.dataset.serviceId!;
+  const TEMPLATE_ID = config.dataset.templateId!;
+  const PUBLIC_KEY = config.dataset.publicKey!;
+
   // Initialize EmailJS with your public key
-  emailjs.init("YOUR_PUBLIC_KEY");
+  emailjs.init(PUBLIC_KEY);
 
   const modal = document.getElementById('email-modal') as HTMLElement;
   const backdrop = document.getElementById('modal-backdrop') as HTMLElement;
@@ -126,11 +134,7 @@ import gmailIcon from '@/assets/icons/gmail.svg';
     submitBtn.textContent = 'Enviando...';
 
     try {
-      await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        form
-      );
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form);
       successMsg.classList.remove('hidden');
       errorMsg.classList.add('hidden');
       setTimeout(closeModal, 2000);
