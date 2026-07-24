@@ -1,5 +1,5 @@
-@import "@fontsource/roboto-condensed/400.css";
-@import "@fontsource/roboto-condensed/400-italic.css";
+@import "@fontsource/roboto-condensed/latin-400.css";
+@import "@fontsource/roboto-condensed/latin-400-italic.css";
 @import "tailwindcss";
 
 body {
