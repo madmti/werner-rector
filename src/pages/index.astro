@@ -2,29 +2,29 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import { Image } from 'astro:assets';
 
-import fondoImg from '../assets/IMG_0218.png';
+import fondoImg from '../assets/IMG_0218.webp';
 import logoRectoria from '../assets/rectoria.png';
 import iconoBoton from '../assets/circulo con logo.png';
-import firmaWerner from '../assets/firmaWerner.png'; 
+import firmaWerner from '../assets/firmaWerner.webp';
 ---
 
 <MainLayout>
   <main class="relative w-full h-dvh overflow-hidden bg-slate-900">
 
     <!-- Foto Werner -->
-    <Image 
-      src={fondoImg} 
-      alt="Werner Creixell, candidato a Rector" 
+    <Image
+      src={fondoImg}
+      alt="Werner Creixell, candidato a Rector"
       class="absolute inset-0 w-full h-full object-cover object-top z-0"
     />
 
     <fieldset class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-[94%] border-2 border-dashed border-white rounded-[2rem] z-10 pointer-events-none flex flex-col">
-      
+
       <legend class="px-4 md:px-8 mx-auto w-auto pointer-events-auto">
-        <Image 
-          src={logoRectoria} 
-          alt="Rectoría UTFSM 2026 2030" 
-          class="h-24 md:h-32 lg:h-[110px] w-auto object-contain drop-shadow-md" 
+        <Image
+          src={logoRectoria}
+          alt="Rectoría UTFSM 2026 2030"
+          class="h-24 md:h-32 lg:h-[110px] w-auto object-contain drop-shadow-md"
         />
       </legend>
 
@@ -35,35 +35,35 @@ import firmaWerner from '../assets/firmaWerner.png';
     </fieldset>
 
     <div class="relative z-20 w-[92%] h-full mx-auto flex flex-col justify-center items-end pointer-events-none">
-        
+
         <div class="flex flex-col items-center text-center pointer-events-auto pr-4 md:pr-16 lg:pr-32 xl:pr-48 pt-20 md:pt-32">
-          
+
           <h1 class="text-white text-3xl md:text-5xl lg:text-[3.5rem] font-normal leading-[1.15] drop-shadow-lg">
             Unidos para formar,<br />
             formar para transformar
           </h1>
-          
+
           <p class="text-white text-xl md:text-2xl lg:text-[1.8rem] italic font-light drop-shadow-md mt-2 md:mt-4">
             Porque somos todos sansanos
           </p>
 
           <a href="#" class="mt-8 md:mt-10 flex items-center bg-white rounded-full p-1 shadow-2xl hover:scale-105 transition-transform duration-300 w-max self-center">
-            
-            <Image 
-              src={iconoBoton} 
-              alt="Ícono del programa" 
-              class="w-14 h-14 md:w-16 md:h-16 shrink-0 object-contain" 
+
+            <Image
+              src={iconoBoton}
+              alt="Ícono del programa"
+              class="w-14 h-14 md:w-16 md:h-16 shrink-0 object-contain"
             />
-            
+
             <div class="px-6 md:px-10 text-[#002f5d] text-center leading-tight font-medium text-lg md:text-xl">
               Descarga el<br />programa
             </div>
 
           </a>
 
-          <Image 
-            src={firmaWerner} 
-            alt="Firma Werner Creixell" 
+          <Image
+            src={firmaWerner}
+            alt="Firma Werner Creixell"
             class="mt-10 md:mt-12 h-14 md:h-20 lg:h-24 w-auto object-contain drop-shadow-lg self-end mr-4 md:mr-8"
           />
 
