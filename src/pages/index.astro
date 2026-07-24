@@ -20,14 +20,14 @@ const lqip = await getImage({
 
     <!-- Foto Werner: placeholder borroso + imagen full -->
     <div
-      class="fixed inset-0 w-full h-full z-0 bg-cover bg-left-top blur-md overflow-hidden"
+      class="fixed inset-0 w-full h-full z-0 bg-cover bg-left-top max-sm:bg-[position:10%_center] blur-md overflow-hidden"
       style={`background-image: url('${lqip.src}');`}
     />
     <Image
       src={fondoImg}
       alt="Werner Creixell, candidato a Rector"
       priority
-      class="fixed inset-0 w-full h-full object-cover object-left-top z-0 opacity-0 transition-opacity duration-700"
+      class="fixed inset-0 w-full h-full object-cover object-left-top max-sm:object-[10%_center] z-0 opacity-0 transition-opacity duration-700"
       onload="this.style.opacity='1'"
     />
 
@@ -37,7 +37,7 @@ const lqip = await getImage({
         <Image
           src={logoRectoria}
           alt="Rectoría UTFSM 2026 2030"
-          class="h-24 md:h-32 lg:h-[110px] w-auto object-contain drop-shadow-md"
+          class="h-20 md:h-32 lg:h-[110px] w-auto object-contain drop-shadow-md"
         />
       </legend>
 
@@ -47,7 +47,7 @@ const lqip = await getImage({
 
     </fieldset>
 
-    <div class="relative z-20 w-[92%] h-full mx-auto flex flex-col justify-center items-end max-sm:items-center pointer-events-none">
+    <div class="relative z-20 w-[92%] h-full mx-auto flex flex-col max-sm:justify-end max-sm:pb-20 justify-center items-end max-sm:items-center pointer-events-none">
 
         <div class="flex flex-col items-center text-center pointer-events-auto pr-4 md:pr-16 lg:pr-32 xl:pr-48 max-sm:pr-0 pt-20 md:pt-32">
 
