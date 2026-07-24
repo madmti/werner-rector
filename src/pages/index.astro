@@ -20,28 +20,28 @@ const lqip = await getImage({
 
     <!-- Foto Werner: placeholder borroso + imagen full -->
     <div
-      class="fixed inset-0 w-full h-full z-0 bg-cover bg-left-top max-sm:bg-[position:10%_center] blur-md overflow-hidden"
+      class="fixed inset-0 w-full h-full z-0 bg-cover bg-top-left max-sm:bg-position-[10%_center] blur-md overflow-hidden"
       style={`background-image: url('${lqip.src}');`}
     />
     <Image
       src={fondoImg}
       alt="Werner Creixell, candidato a Rector"
       priority
-      class="fixed inset-0 w-full h-full object-cover object-left-top max-sm:object-[10%_center] z-0 opacity-0 transition-opacity duration-700"
+      class="fixed inset-0 w-full h-full object-cover object-top-left max-sm:object-[10%_center] z-0 opacity-0 transition-opacity duration-700"
       onload="this.style.opacity='1'"
     />
 
-    <fieldset class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-[94%] border-2 border-dashed border-white rounded-[2rem] z-10 pointer-events-none flex flex-col animate-fade-in" style="animation-delay: 0.3s">
+    <fieldset class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-[94%] border-2 border-dashed border-white rounded-4xl z-10 pointer-events-none flex flex-col animate-fade-in" style="animation-delay: 0.3s">
 
       <legend class="px-4 md:px-8 mx-auto w-auto pointer-events-auto">
         <Image
           src={logoRectoria}
           alt="Rectoría UTFSM 2026 2030"
-          class="h-20 md:h-32 lg:h-[110px] w-auto object-contain drop-shadow-md"
+          class="h-20 md:h-32 lg:h-27.5 w-auto object-contain drop-shadow-md"
         />
       </legend>
 
-      <div class="absolute -bottom-[9px] md:-bottom-[11px] left-0 w-full flex justify-center pointer-events-auto">
+      <div class="absolute -bottom-2.25 md:-bottom-2.75 left-0 w-full flex justify-center pointer-events-auto">
 
       </div>
 
