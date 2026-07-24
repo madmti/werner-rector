@@ -1,0 +1,152 @@
+---
+const EMAILJS_SERVICE_ID = "service_7aaej2g";
+const EMAILJS_TEMPLATE_ID = "template_kzkbct9";
+const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
+
+import gmailIcon from '@/assets/icons/gmail.svg';
+---
+
+<!-- Hidden elements to pass config to client script -->
+<div id="emailjs-config" data-service-id={EMAILJS_SERVICE_ID} data-template-id={EMAILJS_TEMPLATE_ID} data-public-key={EMAILJS_PUBLIC_KEY} class="hidden"></div>
+
+<div id="email-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+  <!-- Backdrop -->
+  <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+  <!-- Modal -->
+  <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md z-10 animate-slide-up">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <img src={gmailIcon.src} alt="Gmail" class="w-8 h-8" />
+        <h2 class="text-xl font-semibold text-gray-800">Enviar mensaje</h2>
+      </div>
+      <button id="close-modal" class="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer" aria-label="Cerrar">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form id="contact-form" class="p-6 space-y-4">
+      <div>
+        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          required
+          class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+          placeholder="Tu nombre"
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+          placeholder="tu@email.com"
+        />
+      </div>
+
+      <div>
+        <label for="mensaje" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+        <textarea
+          id="mensaje"
+          name="mensaje"
+          required
+          rows="4"
+          class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+          placeholder="Escribe tu mensaje..."
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        id="submit-btn"
+        class="w-full py-3 bg-[#002f5d] text-white font-medium rounded-lg hover:bg-[#001f3d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+      >
+        Enviar
+      </button>
+
+      <!-- Success/Error messages -->
+      <div id="form-success" class="hidden p-3 bg-green-50 text-green-700 rounded-lg text-sm">
+        Mensaje enviado correctamente.
+      </div>
+      <div id="form-error" class="hidden p-3 bg-red-50 text-red-700 rounded-lg text-sm">
+        Error al enviar. Intenta nuevamente.
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  import emailjs from '@emailjs/browser';
+
+  // Read config from hidden element
+  const config = document.getElementById('emailjs-config')!;
+  const SERVICE_ID = config.dataset.serviceId!;
+  const TEMPLATE_ID = config.dataset.templateId!;
+  const PUBLIC_KEY = config.dataset.publicKey!;
+
+  // Initialize EmailJS with your public key
+  emailjs.init(PUBLIC_KEY);
+
+  const modal = document.getElementById('email-modal') as HTMLElement;
+  const backdrop = document.getElementById('modal-backdrop') as HTMLElement;
+  const closeBtn = document.getElementById('close-modal') as HTMLElement;
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const successMsg = document.getElementById('form-success') as HTMLElement;
+  const errorMsg = document.getElementById('form-error') as HTMLElement;
+
+  function openModal() {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+    form.reset();
+    successMsg.classList.add('hidden');
+    errorMsg.classList.add('hidden');
+  }
+
+  // Close modal handlers
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Form submission
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    try {
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form);
+      successMsg.classList.remove('hidden');
+      errorMsg.classList.add('hidden');
+      setTimeout(closeModal, 2000);
+    } catch (error) {
+      errorMsg.classList.remove('hidden');
+      successMsg.classList.add('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar';
+    }
+  });
+
+  // Expose openModal function for external use
+  (window as any).openEmailModal = openModal;
+</script>
