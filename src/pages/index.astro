@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import EmailModal from "../components/EmailModal.astro";
 import { Image, getImage } from 'astro:assets';
 
 import fondoImg from '../assets/IMG_0218.webp';
@@ -64,7 +65,7 @@ const lqip = await getImage({
             Porque somos todos sansanos
           </p>
 
-          <a href="/programa.pdf" target="_blank" rel="noopener noreferrer" class="mt-8 md:mt-10 flex items-center bg-white rounded-full p-1 shadow-2xl hover:scale-105 transition-transform duration-300 w-max self-center animate-slide-up" data-umami-event="download-programa" data-umami-event-url="/programa.pdf" style="animation-delay: 0.9s">
+          <a href="/programa.pdf" target="_blank" rel="noopener noreferrer" class="mt-8 md:mt-10 flex items-center bg-white rounded-full p-1 shadow-2xl hover:scale-105 transition-transform duration-300 w-max self-center animate-slide-up cursor-pointer" data-umami-event="download-programa" data-umami-event-url="/programa.pdf" style="animation-delay: 0.9s">
 
             <Image
               src={iconoBoton}
@@ -86,13 +87,13 @@ const lqip = await getImage({
           />
 
           <div class="flex gap-4 mt-6 md:mt-8 animate-slide-up" style="animation-delay: 1.3s">
-            <a href="mailto:werner@example.com" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center" data-umami-event="click-social-mail" data-umami-event-url="gmail" aria-label="Email">
+            <button type="button" onclick="window.openEmailModal()" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer" data-umami-event="click-social-gmail" data-umami-event-url="gmail" aria-label="Email">
               <img src={gmailIcon.src} alt="Gmail" class="w-6 h-6 md:w-7 md:h-7 object-contain" />
-            </a>
-            <a href="https://www.instagram.com/wernercreixell.rector/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center" data-umami-event="click-social-instagram" data-umami-event-url="instagram" aria-label="Instagram">
+            </button>
+            <a href="https://www.instagram.com/wernercreixell.rector/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer" data-umami-event="click-social-instagram" data-umami-event-url="instagram" aria-label="Instagram">
               <img src={instagramIcon.src} alt="Instagram" class="w-6 h-6 md:w-7 md:h-7 object-contain" />
             </a>
-            <a href="https://www.linkedin.com/in/creixell/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center" data-umami-event="click-social-linkedin" data-umami-event-url="linkedin" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/creixell/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer" data-umami-event="click-social-linkedin" data-umami-event-url="linkedin" aria-label="LinkedIn">
               <img src={linkedinIcon.src} alt="LinkedIn" class="w-6 h-6 md:w-7 md:h-7 object-contain" />
             </a>
           </div>
@@ -100,4 +101,5 @@ const lqip = await getImage({
         </div>
     </div>
   </main>
+  <EmailModal />
 </MainLayout>
