@@ -1,16 +1,16 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import EmailModal from "../components/EmailModal.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import EmailModal from "@/components/EmailModal.astro";
 import { Image, getImage } from 'astro:assets';
 
-import fondoImg from '../assets/IMG_0218.webp';
-import logoRectoria from '../assets/rectoria.png';
-import iconoBoton from '../assets/boton nuevo.png';
-import firmaWerner from '../assets/firmaWerner.webp';
+import fondoImg from '@/assets/IMG_0218.webp';
+import logoRectoria from '@/assets/rectoria.png';
+import iconoBoton from '@/assets/logo-boton.png';
+import firmaWerner from '@/assets/firmaWerner.webp';
 
-import gmailIcon from '../assets/icons/gmail.svg';
-import instagramIcon from '../assets/icons/instagram.svg';
-import linkedinIcon from '../assets/icons/linkedin.svg';
+import gmailIcon from '@/assets/icons/gmail.svg';
+import instagramIcon from '@/assets/icons/instagram.svg';
+import linkedinIcon from '@/assets/icons/linkedin.svg';
 
 const lqip = await getImage({
   src: fondoImg,
