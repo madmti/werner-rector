@@ -1,105 +1,26 @@
 ---
-import MainLayout from "@/layouts/MainLayout.astro";
-import EmailModal from "@/components/EmailModal.astro";
-import { Image, getImage } from 'astro:assets';
-
-import fondoImg from '@/assets/IMG_0218.webp';
-import logoRectoria from '@/assets/rectoria.png';
-import iconoBoton from '@/assets/logo-boton.png';
-import firmaWerner from '@/assets/firmaWerner.webp';
-
-import gmailIcon from '@/assets/icons/gmail.svg';
-import instagramIcon from '@/assets/icons/instagram.svg';
-import linkedinIcon from '@/assets/icons/linkedin.svg';
-
-const lqip = await getImage({
-  src: fondoImg,
-  width: 500,
-  quality: 20,
-  format: 'webp',
-});
+import MainLayout from "@/layouts/MainLayout.astro"
+import Navigation from "@/components/Navigation.astro"
+import Hero from "@/components/sections/Hero.astro"
+import Proposito from "@/components/sections/Proposito.astro"
+import Vision from "@/components/sections/Vision.astro"
+import Pilares from "@/components/sections/Pilares.astro"
+import Werner from "@/components/sections/Werner.astro"
+import Programa from "@/components/sections/Programa.astro"
+import LogoAnimado from "@/components/sections/LogoAnimado.astro"
+import Participa from "@/components/sections/Participa.astro"
 ---
 
 <MainLayout>
-  <main class="relative w-full h-dvh overflow-hidden bg-slate-900">
-
-    <!-- Foto Werner: placeholder borroso + imagen full -->
-    <div
-      class="fixed inset-0 w-full h-full z-0 bg-cover bg-top-left max-sm:bg-position-[10%_center] blur-md overflow-hidden"
-      style={`background-image: url('${lqip.src}');`}
-    />
-    <Image
-      src={fondoImg}
-      alt="Werner Creixell, candidato a Rector"
-      priority
-      class="fixed inset-0 w-full h-full object-cover object-top-left max-sm:object-[10%_center] z-0 opacity-0 transition-opacity duration-700"
-      onload="this.style.opacity='1'"
-    />
-
-    <fieldset class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-[94%] border-2 border-dashed border-white rounded-4xl z-10 pointer-events-none flex flex-col animate-fade-in" style="animation-delay: 0.3s">
-
-      <legend class="px-4 md:px-8 mx-auto w-auto pointer-events-auto">
-        <Image
-          src={logoRectoria}
-          alt="Rectoría UTFSM 2026 2030"
-          class="h-20 md:h-32 lg:h-27.5 w-auto object-contain drop-shadow-md"
-        />
-      </legend>
-
-      <div class="absolute -bottom-2.25 md:-bottom-2.75 left-0 w-full flex justify-center pointer-events-auto">
-
-      </div>
-
-    </fieldset>
-
-    <div class="relative z-20 w-[92%] h-full mx-auto flex flex-col max-sm:justify-end max-sm:pb-20 justify-center items-end max-sm:items-center pointer-events-none">
-
-        <div class="flex flex-col items-center text-center pointer-events-auto pr-4 md:pr-16 lg:pr-32 xl:pr-48 max-sm:pr-0 pt-20 md:pt-32">
-
-          <h1 class="text-white text-3xl md:text-5xl lg:text-[3.5rem] font-normal leading-[1.15] drop-shadow-lg animate-slide-up" style="animation-delay: 0.5s">
-            Unidos para formar,<br />
-            formar para transformar
-          </h1>
-
-          <p class="text-white text-xl md:text-2xl lg:text-[1.8rem] italic font-light drop-shadow-md mt-2 md:mt-4 animate-slide-up" style="animation-delay: 0.7s">
-            Porque somos todos sansanos
-          </p>
-
-          <a href="/programa.pdf" target="_blank" rel="noopener noreferrer" class="mt-8 md:mt-10 flex items-center bg-white rounded-full p-1 shadow-2xl hover:scale-105 transition-transform duration-300 w-max self-center animate-slide-up cursor-pointer" data-umami-event="download-programa" data-umami-event-url="/programa.pdf" style="animation-delay: 0.9s">
-
-            <Image
-              src={iconoBoton}
-              alt="Ícono del programa"
-              class="w-14 h-14 md:w-16 md:h-16 shrink-0 object-contain"
-            />
-
-            <div class="px-6 md:px-10 text-[#002f5d] text-center leading-tight font-medium text-lg md:text-xl">
-              Descarga el<br />programa
-            </div>
-
-          </a>
-
-          <Image
-            src={firmaWerner}
-            alt="Firma Werner Creixell"
-            class="mt-10 md:mt-12 h-14 md:h-20 lg:h-24 w-auto object-contain drop-shadow-lg self-end mr-4 md:mr-8 max-sm:self-center max-sm:mr-0 animate-slide-up"
-            style="animation-delay: 1.1s"
-          />
-
-          <div class="flex gap-4 mt-6 md:mt-8 animate-slide-up" style="animation-delay: 1.3s">
-            <button type="button" onclick="window.openEmailModal()" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer" data-umami-event="click-social-gmail" data-umami-event-url="gmail" aria-label="Email">
-              <img src={gmailIcon.src} alt="Gmail" class="w-6 h-6 md:w-7 md:h-7 object-contain" />
-            </button>
-            <a href="https://www.instagram.com/wernercreixell.rector/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer" data-umami-event="click-social-instagram" data-umami-event-url="instagram" aria-label="Instagram">
-              <img src={instagramIcon.src} alt="Instagram" class="w-6 h-6 md:w-7 md:h-7 object-contain" />
-            </a>
-            <a href="https://www.linkedin.com/in/creixell/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/90 hover:bg-white shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer" data-umami-event="click-social-linkedin" data-umami-event-url="linkedin" aria-label="LinkedIn">
-              <img src={linkedinIcon.src} alt="LinkedIn" class="w-6 h-6 md:w-7 md:h-7 object-contain" />
-            </a>
-          </div>
-
-        </div>
-    </div>
-  </main>
-  <EmailModal />
+    <Navigation />
+    <main>
+        <Hero />
+        <Proposito />
+        <Vision />
+        <Pilares />
+        <Werner />
+        <Programa />
+        <LogoAnimado />
+        <Participa />
+    </main>
 </MainLayout>
