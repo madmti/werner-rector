@@ -10,7 +10,7 @@ import linea from '@/assets/LogoAnimado/Linea.png';
 import CampusData from '@/components/CampusData.astro';
 ---
 
-<section class="relative h-[200vh] bg-white" id="logo-animado">
+<section class="relative h-[130vh] bg-white" id="logo-animado">
   <div class="sticky top-0 h-screen overflow-hidden">
     <div class="relative w-full h-full">
 
@@ -34,25 +34,36 @@ import CampusData from '@/components/CampusData.astro';
       </div>
 
       <!-- ============ MOBILE ============ -->
+      <!-- Both 04 and 08 share the same structure so positions match.
+           Bottom half reserves space for CampusData (visible only in 08). -->
 
-      <!-- 04: both halves stacked, centered vertically -->
+      <!-- 04: both halves stacked + invisible spacer for text area -->
       <div class="logo-04 sm:hidden absolute inset-0 flex flex-col items-center justify-center px-4">
-        <div class="w-full aspect-video">
-          <Image src={left04} alt="" class="w-full h-full object-contain" />
+        <div class="w-full max-w-md">
+          <div class="w-full aspect-video">
+            <Image src={left04} alt="" class="w-full h-full object-contain" />
+          </div>
         </div>
-        <div class="w-full aspect-video">
-          <Image src={right04} alt="" class="w-full h-full object-contain" />
+        <div class="w-full max-w-md">
+          <div class="w-full flex items-center justify-center relative">
+              <div class="w-full aspect-video absolute">
+                <Image src={right04} alt="" class="w-full h-full object-contain" />
+              </div>
+
+            <div class="invisible"><CampusData /></div>
+          </div>
         </div>
       </div>
 
-      <!-- 08 + campus: fades in covering both halves -->
+      <!-- 08 + campus: same structure with images swapped + visible text -->
       <div class="layer-08 sm:hidden absolute inset-0 flex flex-col items-center justify-center px-4" style="opacity:0">
-        <div class="w-full aspect-video">
-          <Image src={left08} alt="" class="w-full h-full object-contain" />
+        <div class="w-full max-w-md">
+          <div class="w-full aspect-video">
+            <Image src={left08} alt="" class="w-full h-full object-contain" />
+          </div>
         </div>
-        <div class="w-full aspect-video relative">
-          <Image src={right08} alt="" class="w-full h-full object-contain" />
-          <div class="absolute inset-0 flex items-center justify-center">
+        <div class="w-full max-w-md">
+          <div class="w-full flex items-center justify-center">
             <CampusData />
           </div>
         </div>
@@ -62,7 +73,7 @@ import CampusData from '@/components/CampusData.astro';
   </div>
 </section>
 
-<section class="flex flex-col items-center justify-center bg-white px-4 py-16 md:py-24 gap-4 text-center">
+<section class="flex flex-col items-center justify-center bg-white px-4 py-12 md:py-16 gap-4 text-center">
   <div class="space-y-1">
     <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul">
       Unidos para <strong>formar</strong>
@@ -85,8 +96,7 @@ import CampusData from '@/components/CampusData.astro';
   function update() {
     const rect = section.getBoundingClientRect();
     const total = rect.height - window.innerHeight;
-    const safeArea = 120;
-    const progress = Math.max(0, Math.min(1, (safeArea - rect.top) / total));
+    const progress = Math.max(0, Math.min(1, -rect.top / total));
 
     logos04.forEach(el => el.style.opacity = String(1 - progress));
     layers08.forEach(el => el.style.opacity = String(progress));
