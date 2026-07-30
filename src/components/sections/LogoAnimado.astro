@@ -6,6 +6,7 @@ import left04 from '@/assets/LogoAnimado/halves/04-left.png';
 import right04 from '@/assets/LogoAnimado/halves/04-right.png';
 import left08 from '@/assets/LogoAnimado/halves/08-left.png';
 import right08 from '@/assets/LogoAnimado/halves/08-right.png';
+import linea from '@/assets/LogoAnimado/Linea.png';
 import CampusData from '@/components/CampusData.astro';
 ---
 
@@ -59,6 +60,21 @@ import CampusData from '@/components/CampusData.astro';
 
     </div>
   </div>
+</section>
+
+<section class="flex flex-col items-center justify-center bg-white px-4 py-16 md:py-24 gap-4 text-center">
+  <div class="space-y-1">
+    <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul">
+      Unidos para <strong>formar</strong>
+    </p>
+    <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul">
+      Formar para <strong>transformar</strong>
+    </p>
+  </div>
+  <Image src={linea} alt="" class="w-3/4 max-w-sm object-contain" style="height: auto" />
+  <p class="text-xl md:text-2xl lg:text-[1.8rem] italic font-light text-brand-azul">
+    Porque somos todos sansanos
+  </p>
 </section>
 
 <script>
