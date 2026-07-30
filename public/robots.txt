@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://werner-rector.cl/sitemap-index.xml
