@@ -2,36 +2,57 @@
 import { Image } from 'astro:assets';
 import logo04 from '@/assets/LogoAnimado/Logo werner creixell-04.png';
 import logo08 from '@/assets/LogoAnimado/Logo werner creixell-08.png';
+import left04 from '@/assets/LogoAnimado/halves/04-left.png';
+import right04 from '@/assets/LogoAnimado/halves/04-right.png';
+import left08 from '@/assets/LogoAnimado/halves/08-left.png';
+import right08 from '@/assets/LogoAnimado/halves/08-right.png';
 import CampusData from '@/components/CampusData.astro';
 ---
 
 <section class="relative h-[200vh] bg-white" id="logo-animado">
-  <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-    <div class="relative w-full h-full flex items-center justify-center">
+  <div class="sticky top-0 h-screen overflow-hidden">
+    <div class="relative w-full h-full">
 
-      <!-- 04: full logo + firma -->
+      <!-- ============ DESKTOP ============ -->
       <Image
         src={logo04}
         alt="Logo Werner Creixell"
-        class="absolute inset-0 w-full h-full object-contain p-4 md:p-8"
-        id="logo-04"
+        class="logo-04 max-sm:hidden absolute inset-0 w-full h-full object-contain p-4 md:p-8"
       />
 
-      <!-- 08: solo W + contenido overlay -->
-      <div class="absolute inset-0 w-full h-full p-4 md:p-8" id="layer-08">
-        <div class="relative w-full h-full flex items-center justify-center">
-          <Image
-            src={logo08}
-            alt=""
-            class="absolute inset-0 w-full h-full object-contain"
-          />
-
+      <div class="layer-08 max-sm:hidden absolute inset-0 p-4 md:p-8" style="opacity:0">
+        <div class="relative w-full h-full">
+          <Image src={logo08} alt="" class="absolute inset-0 w-full h-full object-contain" />
           <div class="absolute inset-0 flex items-center justify-center">
-            <!-- spacer left to push content to right half of image -->
             <div class="w-1/2" />
             <div class="w-1/2 flex items-center justify-center pr-4 md:pr-8 lg:pr-12">
               <CampusData />
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ MOBILE ============ -->
+
+      <!-- 04: both halves stacked, centered vertically -->
+      <div class="logo-04 sm:hidden absolute inset-0 flex flex-col items-center justify-center px-4">
+        <div class="w-full aspect-video">
+          <Image src={left04} alt="" class="w-full h-full object-contain" />
+        </div>
+        <div class="w-full aspect-video">
+          <Image src={right04} alt="" class="w-full h-full object-contain" />
+        </div>
+      </div>
+
+      <!-- 08 + campus: fades in covering both halves -->
+      <div class="layer-08 sm:hidden absolute inset-0 flex flex-col items-center justify-center px-4" style="opacity:0">
+        <div class="w-full aspect-video">
+          <Image src={left08} alt="" class="w-full h-full object-contain" />
+        </div>
+        <div class="w-full aspect-video relative">
+          <Image src={right08} alt="" class="w-full h-full object-contain" />
+          <div class="absolute inset-0 flex items-center justify-center">
+            <CampusData />
           </div>
         </div>
       </div>
@@ -42,16 +63,17 @@ import CampusData from '@/components/CampusData.astro';
 
 <script>
   const section = document.getElementById('logo-animado')!;
-  const logo04 = document.getElementById('logo-04')!;
-  const layer08 = document.getElementById('layer-08')!;
+  const logos04 = section.querySelectorAll('.logo-04');
+  const layers08 = section.querySelectorAll('.layer-08');
 
   function update() {
     const rect = section.getBoundingClientRect();
     const total = rect.height - window.innerHeight;
     const safeArea = 120;
     const progress = Math.max(0, Math.min(1, (safeArea - rect.top) / total));
-    logo04.style.opacity = String(1 - progress);
-    layer08.style.opacity = String(progress);
+
+    logos04.forEach(el => el.style.opacity = String(1 - progress));
+    layers08.forEach(el => el.style.opacity = String(progress));
   }
 
   window.addEventListener('scroll', update, { passive: true });
