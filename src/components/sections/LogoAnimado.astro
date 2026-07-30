@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import logo04 from '@/assets/LogoAnimado/Logo werner creixell-04.png';
 import logo08 from '@/assets/LogoAnimado/Logo werner creixell-08.png';
-import usmLogo from '@/assets/LogoAnimado/25.-USM.png';
+import CampusData from '@/components/CampusData.astro';
 ---
 
 <section class="relative h-[200vh] bg-white" id="logo-animado">
@@ -30,51 +30,7 @@ import usmLogo from '@/assets/LogoAnimado/25.-USM.png';
             <!-- spacer left to push content to right half of image -->
             <div class="w-1/2" />
             <div class="w-1/2 flex items-center justify-center pr-4 md:pr-8 lg:pr-12">
-              <div class="space-y-10">
-                <!-- 3 CAMPUS / 2 SEDES -->
-                <div class="grid grid-cols-2 gap-x-10 gap-y-3">
-                  <div>
-                    <p class="font-bold text-xl md:text-2xl uppercase text-brand-azul mb-3">3 Campus</p>
-                    <div class="space-y-3">
-                      <span class="flex items-center gap-3 text-lg md:text-xl text-brand-azul">
-                        <span class="w-4 h-4 rounded-full bg-brand-amarillo shrink-0" />
-                        Campus Vitacura
-                      </span>
-                      <span class="flex items-center gap-3 text-lg md:text-xl text-brand-azul">
-                        <span class="w-4 h-4 rounded-full bg-brand-azul shrink-0" />
-                        Campus Casa Central
-                      </span>
-                      <span class="flex items-center gap-3 text-lg md:text-xl text-brand-azul">
-                        <span class="w-4 h-4 rounded-full bg-brand-rojo shrink-0" />
-                        Campus San Joaquín
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p class="font-bold text-xl md:text-2xl uppercase text-brand-azul mb-3">2 Sedes</p>
-                    <div class="space-y-3">
-                      <span class="flex items-center gap-3 text-lg md:text-xl text-brand-azul">
-                        <span class="w-4 h-4 rounded-full bg-brand-verde shrink-0" />
-                        Sede Viña del Mar
-                      </span>
-                      <span class="flex items-center gap-3 text-lg md:text-xl text-brand-azul">
-                        <span class="w-4 h-4 rounded-full bg-black shrink-0" />
-                        Sede Concepción
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 1 UNIVERSIDAD -->
-                <div>
-                  <p class="font-bold text-xl md:text-2xl uppercase text-brand-azul mb-3">1 Universidad</p>
-                  <Image
-                    src={usmLogo}
-                    alt="Universidad Técnica Federico Santa María"
-                    class="h-14 md:h-20 w-auto object-contain"
-                  />
-                </div>
-              </div>
+              <CampusData />
             </div>
           </div>
         </div>
