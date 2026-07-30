@@ -5,12 +5,11 @@ import logo08 from '@/assets/LogoAnimado/Logo werner creixell-08.png';
 import left04 from '@/assets/LogoAnimado/halves/04-left.png';
 import right04 from '@/assets/LogoAnimado/halves/04-right.png';
 import left08 from '@/assets/LogoAnimado/halves/08-left.png';
-import right08 from '@/assets/LogoAnimado/halves/08-right.png';
 import linea from '@/assets/LogoAnimado/Linea.png';
 import CampusData from '@/components/CampusData.astro';
 ---
 
-<section class="relative h-[130vh] bg-white" id="logo-animado">
+<section class="relative h-[130vh]" id="logo-animado">
   <div class="sticky top-0 h-screen overflow-hidden">
     <div class="relative w-full h-full">
 
@@ -73,7 +72,7 @@ import CampusData from '@/components/CampusData.astro';
   </div>
 </section>
 
-<section class="flex flex-col items-center justify-center bg-white px-4 py-12 md:py-16 gap-4 text-center">
+<section class="flex flex-col items-center justify-center bg-white px-4 pb-12 md:pb-16 mt-[-15vh] sm:mt-[-20vh] gap-4 text-center">
   <div class="space-y-1">
     <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul">
       Unidos para <strong>formar</strong>
@@ -88,8 +87,8 @@ import CampusData from '@/components/CampusData.astro';
   </p>
 </section>
 
-<script>
-  const section = document.getElementById('logo-animado')!;
+<script is:inline>
+  const section = document.getElementById('logo-animado');
   const logos04 = section.querySelectorAll('.logo-04');
   const layers08 = section.querySelectorAll('.layer-08');
 
