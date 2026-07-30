@@ -1,6 +1,167 @@
 ---
+import { Image } from 'astro:assets';
+import Badge from '@/components/Badge.astro';
+import fondoParticipa from '@/assets/Participa/Busto federico.png';
+import instagramIcon from '@/assets/icons/instagram.svg';
+import linkedinIcon from '@/assets/icons/linkedin.svg';
+import gmailIcon from '@/assets/icons/gmail.svg';
+
+const EMAILJS_SERVICE_ID = "service_7aaej2g";
+const EMAILJS_TEMPLATE_ID = "template_kzkbct9";
+const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
 ---
 
-<section class="min-h-screen flex items-center justify-center">
-    <h1 class="text-4xl font-bold">Participa</h1>
+<section class="relative min-h-screen flex items-center overflow-hidden bg-[#181c33]">
+  <Image
+    src={fondoParticipa}
+    alt="Busto Federico Santa María"
+    class="absolute inset-0 w-full h-full object-cover opacity-50"
+  />
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20">
+
+    <!-- Left side -->
+    <div class="flex flex-col gap-6 text-white">
+      <Badge text="Participa" variant="blanca" />
+
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-wide flex flex-col">
+        Una invitación <span class="text-brand-amarillo">a colaborar</span>
+      </h2>
+
+      <p class="text-lg md:text-xl leading-relaxed max-w-lg">
+        Te invitamos a construir juntos una Universidad más integrada, moderna,
+        exigente y conectada con los desafíos del siglo XXI, sin perder nunca
+        el sello humano y el sentido de misión que nos legó Federico Santa María.
+      </p>
+
+      <div class="flex gap-4 mt-2">
+        <a
+          href="https://www.instagram.com/wernercreixell.rector/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 flex items-center justify-center"
+          aria-label="Instagram"
+        >
+          <img src={instagramIcon.src} alt="Instagram" class="w-6 h-6" />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/creixell/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 flex items-center justify-center"
+          aria-label="LinkedIn"
+        >
+          <img src={linkedinIcon.src} alt="LinkedIn" class="w-6 h-6" />
+        </a>
+        <a
+          href="mailto:contacto@wernercreixell.cl"
+          class="w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 flex items-center justify-center"
+          aria-label="Email"
+        >
+          <img src={gmailIcon.src} alt="Email" class="w-6 h-6" />
+        </a>
+      </div>
+    </div>
+
+    <!-- Right side - Email form -->
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
+      <h3 class="text-2xl font-bold text-white mb-6">¡Manda un mensaje!</h3>
+      <form id="participa-form" class="space-y-4">
+        <div>
+          <input
+            type="text"
+            name="nombre"
+            required
+            class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-brand-amarillo focus:border-transparent outline-none transition-all"
+            placeholder="Tu nombre"
+          />
+        </div>
+
+        <div>
+          <input
+            type="email"
+            name="email"
+            required
+            class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-brand-amarillo focus:border-transparent outline-none transition-all"
+            placeholder="tu@email.com"
+          />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="origen"
+            required
+            class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-brand-amarillo focus:border-transparent outline-none transition-all"
+            placeholder="¿De dónde nos escribes?"
+          />
+        </div>
+
+        <div>
+          <textarea
+            name="mensaje"
+            required
+            rows="4"
+            class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-brand-amarillo focus:border-transparent outline-none transition-all resize-none"
+            placeholder="Escribe tu mensaje..."
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          id="participa-submit-btn"
+          class="w-full py-3 bg-brand-amarillo text-brand-negro font-bold rounded-lg hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        >
+          Enviar
+        </button>
+
+        <div id="participa-success" class="hidden p-3 bg-green-500/20 text-green-300 rounded-lg text-sm text-center">
+          Mensaje enviado correctamente.
+        </div>
+        <div id="participa-error" class="hidden p-3 bg-red-500/20 text-red-300 rounded-lg text-sm text-center">
+          Error al enviar. Intenta nuevamente.
+        </div>
+      </form>
+    </div>
+  </div>
 </section>
+
+<div id="participa-emailjs-config" data-service-id={EMAILJS_SERVICE_ID} data-template-id={EMAILJS_TEMPLATE_ID} data-public-key={EMAILJS_PUBLIC_KEY} class="hidden"></div>
+
+<script>
+  import emailjs from '@emailjs/browser';
+
+  const config = document.getElementById('participa-emailjs-config')!;
+  const SERVICE_ID = config.dataset.serviceId!;
+  const TEMPLATE_ID = config.dataset.templateId!;
+  const PUBLIC_KEY = config.dataset.publicKey!;
+
+  emailjs.init(PUBLIC_KEY);
+
+  const form = document.getElementById('participa-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('participa-submit-btn') as HTMLButtonElement;
+  const successMsg = document.getElementById('participa-success') as HTMLElement;
+  const errorMsg = document.getElementById('participa-error') as HTMLElement;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    try {
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form);
+      successMsg.classList.remove('hidden');
+      errorMsg.classList.add('hidden');
+      form.reset();
+      setTimeout(() => {
+        successMsg.classList.add('hidden');
+      }, 3000);
+    } catch (error) {
+      errorMsg.classList.remove('hidden');
+      successMsg.classList.add('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar';
+    }
+  });
+</script>
