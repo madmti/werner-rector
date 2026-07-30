@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lighthouse": "bunx lighthouse http://localhost:4321 --output=html --output-path=./reports/lighthouse.html"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
