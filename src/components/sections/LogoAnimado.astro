@@ -1,6 +1,42 @@
 ---
+import { Image } from 'astro:assets';
+import logo04 from '@/assets/LogoAnimado/Logo werner creixell-04.png';
+import logo08 from '@/assets/LogoAnimado/Logo werner creixell-08.png';
 ---
 
-<section class="min-h-screen flex items-center justify-center">
-    <h1 class="text-4xl font-bold">LogoAnimado</h1>
+<section class="relative h-[200vh]" id="logo-animado">
+  <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+    <div class="relative w-full h-full flex items-center justify-center">
+      <Image
+        src={logo04}
+        alt="Logo Werner Creixell"
+        class="absolute inset-0 w-full h-full object-contain p-4 md:p-8"
+        id="logo-04"
+      />
+      <Image
+        src={logo08}
+        alt="Logo Werner Creixell"
+        class="absolute inset-0 w-full h-full object-contain p-4 md:p-8"
+        id="logo-08"
+        style="opacity: 0"
+      />
+    </div>
+  </div>
 </section>
+
+<script>
+  const section = document.getElementById('logo-animado')!;
+  const logo04 = document.getElementById('logo-04')!;
+  const logo08 = document.getElementById('logo-08')!;
+
+  function update() {
+    const rect = section.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, -rect.top / total));
+    logo04.style.opacity = String(1 - progress);
+    logo08.style.opacity = String(progress);
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+</script>
