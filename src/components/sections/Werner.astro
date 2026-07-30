@@ -4,34 +4,42 @@ import Badge from '@/components/Badge.astro';
 import bgImg from '@/assets/Werner/IMG_0211,.1.png';
 import iconAzul from '@/assets/icons/W fondo azul.png';
 
+const defaultImage = bgImg.src;
+
 const cards = [
   {
     title: '¿Quién es Werner?',
+    image: defaultImage,
     content:
       'Ingeniero Electrónico y Magíster en Electrónica de la UTFSM, Doctor por la Universidad de Tokio y académico del Departamento de Electrónica. Su trayectoria combina investigación, innovación, docencia y gestión universitaria, siempre con un mismo propósito: fortalecer el rol de la Universidad como motor de desarrollo para Chile.',
   },
   {
     title: 'Experiencia internacional',
+    image: defaultImage,
     content:
       'Su experiencia profesional se desarrolló en Tokio, donde trabajó en NEC Corporation liderando proyectos tecnológicos para países del sudeste asiático. Posteriormente fundó SENDA Ltd., empresa desde la cual impulsó soluciones digitales y alianzas estratégicas con proyección internacional. Esta etapa consolidó una visión global de la innovación, la transferencia tecnológica y la colaboración entre la academia y la industria.',
   },
   {
     title: 'Liderazgo universitario',
+    image: defaultImage,
     content:
       'Durante más de quince años ha asumido distintos desafíos de liderazgo dentro de la UTFSM. Como Director del Departamento de Electrónica y exdirector de la Oficina de Transferencia Tecnológica impulsó proyectos que fortalecen la investigación, la innovación y la vinculación con el entorno.',
   },
   {
     title: 'Profesor',
+    image: defaultImage,
     content:
       'Convencido de que la excelencia comienza en el aula, ha desarrollado cursos en inteligencia artificial, aprendizaje automático y tecnologías digitales, incorporando metodologías activas y herramientas innovadoras para potenciar la formación de sus estudiantes. En 2019, este enfoque lo llevó a ser invitado por Texas A&M University para replicar su experiencia docente durante un año.',
   },
   {
     title: 'Investigador',
+    image: defaultImage,
     content:
       'Su trabajo científico se centra en inteligencia artificial, visión computacional, aprendizaje profundo y analítica de datos, colaborando en proyectos interdisciplinarios con impacto en minería, salud, educación y transformación digital.',
   },
   {
     title: '¿Por qué postula a rector?',
+    image: defaultImage,
     content:
       'Porque creo que la UTFSM tiene las capacidades para convertirse en la principal universidad tecnológica de América Latina. Mi propuesta busca fortalecer el liderazgo académico, poner la gestión al servicio de la comunidad y reconstruir una universidad más integrada, conectada con el país y preparada para los desafíos del futuro.',
   },
@@ -41,7 +49,7 @@ const cards = [
 <section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen" id="werner">
   <!-- LEFT: background image + overlay + text -->
   <div class="relative overflow-hidden flex items-center min-h-[50vh] lg:min-h-screen">
-    <Image src={bgImg} alt="" class="absolute inset-0 w-full h-full object-cover object-[80%]" />
+    <img id="werner-left-image" src={defaultImage} alt="" class="absolute inset-0 w-full h-full object-cover object-[80%]" />
     <div class="absolute inset-0 bg-linear-to-r from-black/50 via-black/20 to-transparent" />
     <div class="relative z-10 px-6 md:px-12 lg:px-16 py-12 lg:py-0">
       <Badge text="Werner" />
@@ -57,7 +65,7 @@ const cards = [
       cards.map((card, i) => (
         <div class="werner-wrap grid transition-all duration-500" style="grid-template-rows: 1fr;">
           <div class="overflow-hidden min-h-0">
-            <div class="werner-item" data-index={i}>
+            <div class="werner-item" data-image={card.image} data-index={i}>
               <button
                 class="werner-header group flex items-center gap-3 w-full rounded-full border border-brand-azul/15 py-3 pr-5 pl-2 bg-white/80 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-brand-azul/30 active:bg-brand-azul active:text-white active:border-brand-azul"
               >
@@ -119,6 +127,7 @@ const cards = [
   const wraps = list.querySelectorAll('.werner-wrap');
   const items = list.querySelectorAll('.werner-item');
   const bodies = list.querySelectorAll('.werner-body');
+  const leftImage = document.getElementById('werner-left-image');
   let activeIndex = -1;
 
   function closeAll() {
@@ -149,6 +158,14 @@ const cards = [
     // Expand current
     items[index].classList.add('active');
     items[index].style.order = '-1';
+
+    // Swap background image only if the URL differs
+    const newSrc = items[index].dataset.image;
+    const tmp = document.createElement('a');
+    tmp.href = newSrc;
+    if (leftImage.src !== tmp.href) {
+      leftImage.src = newSrc;
+    }
 
     // Show current wrap, collapse all other wraps
     wraps.forEach((wrap, i) => {
