@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import iconBlanco from '../assets/icons/W fondo blanco.png';
+import iconAzul from '../assets/icons/W fondo azul.png';
+
+interface Props {
+  text: string;
+  variant?: 'blanca' | 'azul';
+}
+
+const { text, variant = 'blanca' } = Astro.props;
+
+const isBlanca = variant === 'blanca';
+const iconSrc = isBlanca ? iconBlanco : iconAzul;
+
+const styles = isBlanca 
+  ? 'border-white text-white' 
+  : 'border-brand-azul text-brand-azul';
+---
+
+<div class={`inline-flex items-center gap-2 border rounded-full py-1 pr-4 pl-1 bg-black/20 backdrop-blur-sm w-max ${styles}`}>
+  <Image 
+    src={iconSrc} 
+    alt="Icono W" 
+    class="w-6 h-6 rounded-full object-contain" 
+  />
+  <span class="font-bold text-sm tracking-wide">{text}</span>
+</div>
