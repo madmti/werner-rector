@@ -1,6 +1,187 @@
 ---
+import { Image } from 'astro:assets';
+import Badge from '@/components/Badge.astro';
+import bgImg from '@/assets/Werner/IMG_0211,.1.png';
+import iconAzul from '@/assets/icons/W fondo azul.png';
+
+const defaultImage = bgImg.src;
+
+const cards = [
+  {
+    title: '¿Quién es Werner?',
+    image: defaultImage,
+    content:
+      'Ingeniero Electrónico y Magíster en Electrónica de la UTFSM, Doctor por la Universidad de Tokio y académico del Departamento de Electrónica. Su trayectoria combina investigación, innovación, docencia y gestión universitaria, siempre con un mismo propósito: fortalecer el rol de la Universidad como motor de desarrollo para Chile.',
+  },
+  {
+    title: 'Experiencia internacional',
+    image: defaultImage,
+    content:
+      'Su experiencia profesional se desarrolló en Tokio, donde trabajó en NEC Corporation liderando proyectos tecnológicos para países del sudeste asiático. Posteriormente fundó SENDA Ltd., empresa desde la cual impulsó soluciones digitales y alianzas estratégicas con proyección internacional. Esta etapa consolidó una visión global de la innovación, la transferencia tecnológica y la colaboración entre la academia y la industria.',
+  },
+  {
+    title: 'Liderazgo universitario',
+    image: defaultImage,
+    content:
+      'Durante más de quince años ha asumido distintos desafíos de liderazgo dentro de la UTFSM. Como Director del Departamento de Electrónica y exdirector de la Oficina de Transferencia Tecnológica impulsó proyectos que fortalecen la investigación, la innovación y la vinculación con el entorno.',
+  },
+  {
+    title: 'Profesor',
+    image: defaultImage,
+    content:
+      'Convencido de que la excelencia comienza en el aula, ha desarrollado cursos en inteligencia artificial, aprendizaje automático y tecnologías digitales, incorporando metodologías activas y herramientas innovadoras para potenciar la formación de sus estudiantes. En 2019, este enfoque lo llevó a ser invitado por Texas A&M University para replicar su experiencia docente durante un año.',
+  },
+  {
+    title: 'Investigador',
+    image: defaultImage,
+    content:
+      'Su trabajo científico se centra en inteligencia artificial, visión computacional, aprendizaje profundo y analítica de datos, colaborando en proyectos interdisciplinarios con impacto en minería, salud, educación y transformación digital.',
+  },
+  {
+    title: '¿Por qué postula a rector?',
+    image: defaultImage,
+    content:
+      'Porque creo que la UTFSM tiene las capacidades para convertirse en la principal universidad tecnológica de América Latina. Mi propuesta busca fortalecer el liderazgo académico, poner la gestión al servicio de la comunidad y reconstruir una universidad más integrada, conectada con el país y preparada para los desafíos del futuro.',
+  },
+];
 ---
 
-<section class="min-h-screen flex items-center justify-center">
-    <h1 class="text-4xl font-bold">Werner</h1>
+<section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen" id="werner">
+  <!-- LEFT: background image + overlay + text -->
+  <div class="relative overflow-hidden flex items-center min-h-[50vh] lg:min-h-screen">
+    <img id="werner-left-image" src={defaultImage} alt="" class="absolute inset-0 w-full h-full object-cover object-[80%]" />
+    <div class="absolute inset-0 bg-linear-to-r from-black/50 via-black/20 to-transparent" />
+    <div class="relative z-10 px-6 md:px-12 lg:px-16 py-12 lg:py-0">
+      <Badge text="Werner" />
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-wide mt-4">
+        Conoce a<br />Werner Creixell
+      </h1>
+    </div>
+  </div>
+
+  <!-- RIGHT: master–detail list -->
+  <div class="flex flex-col justify-center gap-3 px-6 md:px-12 lg:px-16 py-12 lg:py-0 bg-white" id="werner-list">
+    {
+      cards.map((card, i) => (
+        <div class="werner-wrap grid transition-all duration-500" style="grid-template-rows: 1fr;">
+          <div class="overflow-hidden min-h-0">
+            <div class="werner-item" data-image={card.image} data-index={i}>
+              <button
+                class="werner-header group flex items-center gap-3 w-full rounded-full border border-brand-azul/15 py-3 pr-5 pl-2 bg-white/80 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-brand-azul/30 active:bg-brand-azul active:text-white active:border-brand-azul"
+              >
+                <span class="icon-container w-12 h-12 rounded-full bg-brand-azul/10 flex items-center justify-center shrink-0 group-active:bg-white/20 transition-colors">
+                  <Image src={iconAzul} alt="" class="w-12 h-12 object-contain" />
+                </span>
+                <span class="title-text font-bold text-brand-azul text-base flex-1 group-active:text-white transition-colors">
+                  {card.title}
+                </span>
+                <svg
+                  class="werner-arrow w-4 h-4 text-brand-azul/35 transition-all duration-300 shrink-0 group-active:text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div class="werner-body grid transition-all duration-500" style="grid-template-rows: 0fr;">
+                <div class="overflow-hidden min-h-0">
+                  <div class="pt-4 pb-2 px-2 text-gray-600 leading-relaxed">
+                    {card.content}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
 </section>
+
+<style>
+  .werner-item.active .werner-header {
+    background-color: var(--color-brand-azul);
+    color: white;
+    border-color: var(--color-brand-azul);
+  }
+  .werner-item.active .werner-header .icon-container {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  .werner-item.active .werner-header .title-text {
+    color: white;
+  }
+  .werner-item.active .werner-arrow {
+    color: white;
+    transform: rotate(180deg);
+  }
+</style>
+
+<script is:inline>
+  const list = document.getElementById('werner-list');
+  if (!list) throw new Error('#werner-list not found');
+
+  const wraps = list.querySelectorAll('.werner-wrap');
+  const items = list.querySelectorAll('.werner-item');
+  const bodies = list.querySelectorAll('.werner-body');
+  const leftImage = document.getElementById('werner-left-image');
+  let activeIndex = -1;
+
+  function closeAll() {
+    wraps.forEach(w => (w.style.gridTemplateRows = '1fr'));
+    items.forEach((item, i) => {
+      item.classList.remove('active');
+      item.style.order = '';
+      bodies[i].style.gridTemplateRows = '0fr';
+    });
+    activeIndex = -1;
+  }
+
+  function openItem(index) {
+    if (activeIndex === index) {
+      closeAll();
+      return;
+    }
+
+    const prevIndex = activeIndex;
+
+    // Collapse previous body if there was one
+    if (prevIndex !== -1) {
+      bodies[prevIndex].style.gridTemplateRows = '0fr';
+      items[prevIndex].classList.remove('active');
+      items[prevIndex].style.order = '';
+    }
+
+    // Expand current
+    items[index].classList.add('active');
+    items[index].style.order = '-1';
+
+    // Swap background image only if the URL differs
+    const newSrc = items[index].dataset.image;
+    const tmp = document.createElement('a');
+    tmp.href = newSrc;
+    if (leftImage.src !== tmp.href) {
+      leftImage.src = newSrc;
+    }
+
+    // Show current wrap, collapse all other wraps
+    wraps.forEach((wrap, i) => {
+      wrap.style.gridTemplateRows = i === index ? '1fr' : '0fr';
+    });
+
+    // Body expands after a tick so the wrapper is already open
+    requestAnimationFrame(() => {
+      bodies[index].style.gridTemplateRows = '1fr';
+    });
+
+    activeIndex = index;
+  }
+
+  items.forEach((item, i) => {
+    const header = item.querySelector('.werner-header');
+    header.addEventListener('click', () => openItem(i));
+  });
+</script>
