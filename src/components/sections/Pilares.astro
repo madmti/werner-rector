@@ -1,6 +1,111 @@
 ---
+import { Image } from 'astro:assets';
+import Badge from "@/components/Badge.astro";
+import FlipCard from "@/components/FlipCard.astro";
+import bgImg from "@/assets/Vision/Collages USM 2.png";
+import imgProfesorado from "@/assets/Pilares/1.png";
+import imgFormacion from "@/assets/Pilares/2.png";
+import imgComunidad from "@/assets/Pilares/3.png";
+
+const pilares = [
+  {
+    title: "Liderazgo del Profesorado",
+    body: "El liderazgo académico debe orientar el futuro de la Universidad. Fortaleceremos el desarrollo del profesorado, la investigación y una gestión institucional que facilite su labor.",
+    image: imgProfesorado,
+    color: "#f7ae00",
+  },
+  {
+    title: "Formación para Transformar",
+    body: "Formaremos profesionales íntegros, preparados para los desafíos del siglo XXI, mediante una experiencia universitaria de excelencia y aprendizaje permanente.",
+    image: imgFormacion,
+    color: "#d60019",
+  },
+  {
+    title: "Una Comunidad para el Desarrollo de Chile",
+    body: "Integraremos a exalumnos, industria y comunidad para fortalecer el impacto de la UTFSM, potenciar la colaboración y proyectar a la Universidad hacia Chile y el mundo.",
+    image: imgComunidad,
+    color: "#004b85",
+  },
+];
 ---
 
-<section class="min-h-screen flex items-center justify-center" id="pilares">
-    <h1 class="text-4xl font-bold">Pilares</h1>
+<section class="relative w-full flex items-center overflow-hidden" id="pilares">
+  <!-- Fondo -->
+  <Image
+    src={bgImg}
+    alt="Campus UTFSM"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 md:py-16">
+    <!-- Título -->
+    <div class="flex flex-col gap-2 mb-8 lg:mb-10">
+      <Badge text="Pilares" variant="blanca" />
+      <h2 class="text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight text-white drop-shadow-md">
+        <span class="font-bold">Tres pilares,</span><br />
+        <span class="font-normal text-brand-amarillo">una visión</span>
+      </h2>
+    </div>
+
+    <!-- Tarjetas -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 max-w-5xl mx-auto">
+      {pilares.map((pilar) => (
+        <FlipCard
+          class="w-full h-[350px] lg:h-[420px] rounded-2xl shadow-xl text-left"
+          aria-label={`Ver más sobre ${pilar.title}`}
+        >
+          <!-- Frente -->
+          <div slot="front" class="relative w-full h-full flex items-end p-6 md:p-8 rounded-2xl overflow-hidden">
+            <!-- Fondo de tarjeta -->
+            <Image
+              src={pilar.image}
+              alt={pilar.title}
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <!-- Gradiente frontal -->
+            <div
+              class="absolute inset-0 pointer-events-none"
+              style={`background: linear-gradient(to top, ${pilar.color}cc 0%, ${pilar.color}dd 45%, ${pilar.color}80 70%, transparent 100%);`}
+            ></div>
+            
+            <!-- Contenido Frontal -->
+            <div class="relative z-10 flex items-center gap-3">
+              <span class="w-1.5 h-16 bg-white/80 rounded-full shrink-0"></span>
+              <h3 class="text-2xl md:text-[1.6rem] lg:text-3xl font-bold leading-tight text-white drop-shadow-lg">
+                {pilar.title}
+              </h3>
+            </div>
+          </div>
+
+          <!-- Reverso -->
+          <div
+            slot="back"
+            class="relative w-full h-full flex flex-col justify-center p-6 md:p-8 rounded-2xl overflow-hidden"
+          >
+            <!-- Fondo de tarjeta reverso -->
+            <Image
+              src={pilar.image}
+              alt={pilar.title}
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 pointer-events-none"
+              style={`background: linear-gradient(to top, ${pilar.color}cc 0%, ${pilar.color}ee 60%, ${pilar.color}f2 100%);`}
+            ></div>
+            <!-- Contenido del Reverso -->
+            <div class="relative z-10">
+                <h3 class="text-xl md:text-2xl font-bold leading-tight text-white mb-3 drop-shadow-sm">
+                    {pilar.title}
+                </h3>
+                <p class="text-sm md:text-base leading-relaxed text-white/95">
+                    {pilar.body}
+                </p>
+            </div>
+          </div>
+        </FlipCard>
+      ))}
+    </div>
+  </div>
 </section>

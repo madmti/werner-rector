@@ -1,6 +1,64 @@
 ---
+import { Image } from 'astro:assets';
+import Badge from "@/components/Badge.astro";
+import campusImg from "@/assets/Vision/Collages USM 2.png";
+
+const items = [
+  "Liderazgo académico que inspira excelencia",
+  "Gestión con propósito, al servicio del proyecto universitario",
+  "Conexión con el país, para impulsar su desarrollo",
+];
 ---
 
-<section class="min-h-screen flex items-center justify-center" id="vision">
-    <h1 class="text-4xl font-bold">Vision</h1>
+<section class="relative w-full bg-white" id="vision">
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[700px]">
+    <!-- Lado imagen -->
+    <div class="relative overflow-hidden min-h-[400px] lg:min-h-full flex items-center z-10">
+      <Image
+        src={campusImg}
+        alt="Campus UTFSM"
+        class="absolute inset-0 w-full h-full object-cover object-[60%_center]"
+      />
+      <!-- Overlay azul -->
+      <div class="absolute inset-0 bg-brand-azul/50"></div>
+
+      <div class="relative z-10 flex flex-col gap-3 p-8 pb-24 md:p-12 md:pb-32 lg:p-16 lg:pb-16 w-full">
+        <Badge text="Visión" variant="blanca" />
+        <h2 class="text-5xl sm:text-6xl md:text-7xl text-white leading-[1.05] tracking-tight">
+          <span class="font-normal">Nuestra</span><br />
+          <span class="font-bold">visión</span>
+        </h2>
+      </div>
+    </div>
+
+    <!-- Lado contenido -->
+    <div class="flex items-center justify-start px-5 sm:px-8 lg:pl-0 lg:pr-16 py-0 lg:py-16 relative z-20 -mt-16 lg:mt-0 mb-12 lg:mb-0">
+      
+      <div class="bg-[#7ba7c7]/95 backdrop-blur-sm rounded-2xl lg:rounded-l-none lg:rounded-r-2xl p-8 md:p-10 lg:p-12 text-brand-azul shadow-2xl lg:shadow-xl w-full min-h-[400px] flex flex-col justify-center">
+        <p class="text-base sm:text-lg md:text-xl leading-relaxed mb-8 font-medium">
+          Consolidar a la UTFSM como la mejor universidad técnica de América Latina con impacto real en el desarrollo de Chile y la región.
+        </p>
+
+        <ul class="flex flex-col gap-5">
+          {items.map((item) => (
+            <li class="flex items-start gap-3">
+              <svg
+                class="w-6 h-6 sm:w-7 sm:h-7 text-brand-azul shrink-0 mt-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <span class="text-base sm:text-lg leading-snug font-medium">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
