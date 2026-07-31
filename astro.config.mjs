@@ -10,6 +10,9 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig({
     site: "https://werner-rector.cl/",
     output: "static",
+    build: {
+        inlineStylesheets: "always",
+    },
 
     integrations: [
         sitemap({
@@ -27,9 +30,10 @@ export default defineConfig({
         plugins: [
             tailwindcss(),
             visualizer({
+                filename: './reports/stats.json',
+                template: 'raw-data',
                 gzipSize: true,
-                filename: "./reports/bundle-visualizer.html",
-            }),
+                brotliSize: true,            }),
         ],
     },
 });

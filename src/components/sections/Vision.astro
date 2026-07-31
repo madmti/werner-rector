@@ -3,7 +3,7 @@ import { getImage } from 'astro:assets';
 import Badge from "@/components/Badge.astro";
 import campusImg from "@/assets/Vision/Collages USM 2.webp";
 
-const campusFull = await getImage({ src: campusImg, width: 1600 });
+const campusFull = await getImage({ src: campusImg, widths: [480, 800, 1200, 1600], sizes: '(min-width: 1024px) 50vw, 100vw' });
 const campusPlaceholder = await getImage({ src: campusImg, width: 32, quality: 20 });
 
 const items = [
@@ -25,6 +25,8 @@ const items = [
       />
       <img
         src={campusFull.src}
+        srcset={campusFull.srcSet.attribute}
+        sizes="(min-width: 1024px) 50vw, 100vw"
         alt="Campus UTFSM"
         width={campusFull.attributes.width}
         height={campusFull.attributes.height}

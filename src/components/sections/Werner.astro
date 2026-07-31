@@ -4,7 +4,7 @@ import Badge from '@/components/Badge.astro';
 import bgImg from '@/assets/Werner/IMG_0211,.1.webp';
 import iconAzul from '@/assets/icons/W fondo azul.webp';
 
-const bgFull = await getImage({ src: bgImg, width: 1600 });
+const bgFull = await getImage({ src: bgImg, widths: [480, 800, 1200, 1600], sizes: '(min-width: 1024px) 50vw, 100vw' });
 const bgPlaceholder = await getImage({ src: bgImg, width: 32, quality: 20 });
 
 const defaultImage = bgFull.src;
@@ -61,6 +61,8 @@ const cards = [
     <img
       id="werner-left-image"
       src={defaultImage}
+      srcset={bgFull.srcSet.attribute}
+      sizes="(min-width: 1024px) 50vw, 100vw"
       alt=""
       width={bgFull.attributes.width}
       height={bgFull.attributes.height}
@@ -88,7 +90,7 @@ const cards = [
                 class="werner-header group flex items-center gap-3 w-full rounded-full border border-brand-azul/15 py-3 pr-5 pl-2 bg-white/80 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-brand-azul/30 active:bg-brand-azul active:text-white active:border-brand-azul"
               >
                 <span class="icon-container w-12 h-12 rounded-full bg-brand-azul/10 flex items-center justify-center shrink-0 group-active:bg-white/20 transition-colors">
-                  <Image src={iconAzul} alt="" class="w-12 h-12 object-contain" />
+                  <Image src={iconAzul} alt="" class="w-12 h-12 object-contain" widths={[96, 192]} sizes="48px" />
                 </span>
                 <span class="title-text font-bold text-brand-azul text-base flex-1 group-active:text-white transition-colors">
                   {card.title}

@@ -7,7 +7,7 @@ import imgProfesorado from "@/assets/Pilares/1.webp";
 import imgFormacion from "@/assets/Pilares/2.webp";
 import imgComunidad from "@/assets/Pilares/3.webp";
 
-const bgFull = await getImage({ src: bgImg, width: 1600 });
+const bgFull = await getImage({ src: bgImg, widths: [480, 800, 1200, 1600], sizes: '100vw' });
 const bgPlaceholder = await getImage({ src: bgImg, width: 32, quality: 20 });
 
 const pilares = [];
@@ -47,6 +47,8 @@ for (const p of [
   />
   <img
     src={bgFull.src}
+    srcset={bgFull.srcSet.attribute}
+    sizes="100vw"
     alt="Campus UTFSM"
     width={bgFull.attributes.width}
     height={bgFull.attributes.height}

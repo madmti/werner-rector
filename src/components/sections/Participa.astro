@@ -3,7 +3,7 @@ import { getImage } from 'astro:assets';
 import Badge from '@/components/Badge.astro';
 import fondoParticipa from '@/assets/Participa/Busto federico.webp';
 
-const fondoFull = await getImage({ src: fondoParticipa, width: 1200 });
+const fondoFull = await getImage({ src: fondoParticipa, widths: [480, 800, 1200], sizes: '100vw' });
 const fondoPlaceholder = await getImage({ src: fondoParticipa, width: 32, quality: 20 });
 import instagramIcon from '@/assets/icons/instagram.svg';
 import linkedinIcon from '@/assets/icons/linkedin.svg';
@@ -23,6 +23,8 @@ const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
   />
   <img
     src={fondoFull.src}
+    srcset={fondoFull.srcSet.attribute}
+    sizes="100vw"
     alt="Busto Federico Santa María"
     width={fondoFull.attributes.width}
     height={fondoFull.attributes.height}

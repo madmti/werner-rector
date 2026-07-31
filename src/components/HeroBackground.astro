@@ -3,7 +3,7 @@ import { getImage, Image } from 'astro:assets';
 import backgroundImg from '../assets/Hero/background.webp';
 import wFondo from '../assets/Hero/w_werner@4x.webp';
 
-const backgroundFull = await getImage({ src: backgroundImg, width: 1600 });
+const backgroundFull = await getImage({ src: backgroundImg, widths: [480, 800, 1200, 1600], sizes: '100vw' });
 const backgroundPlaceholder = await getImage({ src: backgroundImg, width: 32, quality: 20 });
 ---
 
@@ -16,6 +16,8 @@ const backgroundPlaceholder = await getImage({ src: backgroundImg, width: 32, qu
   />
   <img
     src={backgroundFull.src}
+    srcset={backgroundFull.srcSet.attribute}
+    sizes="100vw"
     alt="Fondo de Mar"
     width={backgroundFull.attributes.width}
     height={backgroundFull.attributes.height}

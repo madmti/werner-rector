@@ -4,7 +4,7 @@ import wernerSolo from '../../assets/Hero/werner.webp';
 import HeroBackground from '../HeroBackground.astro';
 import HeroContent from '../HeroContent.astro';
 
-const wernerSoloFull = await getImage({ src: wernerSolo });
+const wernerSoloFull = await getImage({ src: wernerSolo, widths: [480, 800, 1277], sizes: '(min-width: 768px) 50vw, 100vw' });
 const wernerSoloPlaceholder = await getImage({ src: wernerSolo, width: 600, quality: 20 });
 ---
 
@@ -25,7 +25,9 @@ const wernerSoloPlaceholder = await getImage({ src: wernerSolo, width: 600, qual
       />
       <img
         src={wernerSoloFull.src}
-        alt=""
+        srcset={wernerSoloFull.srcSet.attribute}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        alt="Werner Creixell"
         width={wernerSoloFull.attributes.width}
         height={wernerSoloFull.attributes.height}
         loading="eager"

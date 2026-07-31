@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lighthouse": "bunx lighthouse http://localhost:4321 --output=html --output-path=./reports/lighthouse.html"
+    "lighthouse": "bunx lighthouse http://localhost:4321 --output=json --output-path=./reports/lighthouse.report.json",
+    "badges": "bun run ./scripts/generate-badges.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
