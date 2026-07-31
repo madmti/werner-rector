@@ -4,7 +4,7 @@ import Badge from '@/components/Badge.astro';
 import bgImg from '@/assets/Werner/IMG_0211,.1.webp';
 import iconAzul from '@/assets/icons/W fondo azul.webp';
 
-const bgFull = await getImage({ src: bgImg, widths: [480, 800, 1200, 1600], sizes: '(min-width: 1024px) 50vw, 100vw' });
+const bgFull = await getImage({ src: bgImg, widths: [800, 1200, 2400], sizes: '(min-width: 1024px) 2400px, 100vw' });
 const bgPlaceholder = await getImage({ src: bgImg, width: 32, quality: 20 });
 
 const defaultImage = bgFull.src;
@@ -62,7 +62,7 @@ const cards = [
       id="werner-left-image"
       src={defaultImage}
       srcset={bgFull.srcSet.attribute}
-      sizes="(min-width: 1024px) 50vw, 100vw"
+      sizes="(min-width: 1024px) 2400px, 100vw"
       alt=""
       width={bgFull.attributes.width}
       height={bgFull.attributes.height}
