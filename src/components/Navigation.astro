@@ -2,6 +2,14 @@
 import { Image } from 'astro:assets';
 import logoRector from '../assets/Hero/logo_werner_creixell_rector.png';
 import Button from './Button.astro';
+
+const links = [
+  { href: '#proposito', label: 'Propósito' },
+  { href: '#vision', label: 'Visión' },
+  { href: '#pilares', label: 'Pilares' },
+  { href: '#werner', label: 'Werner' },
+  { href: '#participa', label: 'Participa' },
+];
 ---
 
 <div class="fixed top-6 left-1/2 -translate-x-1/2 w-full max-w-7xl px-6 sm:px-8 lg:px-12 z-50">
@@ -13,11 +21,9 @@ import Button from './Button.astro';
 
     <!-- Enlaces Centrales -->
     <div class="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2 text-black">
-      <a href="#proposito" class="hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Propósito</a>
-      <a href="#vision" class="hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Visión</a>
-      <a href="#pilares" class="hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Pilares</a>
-      <a href="#werner" class="hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Werner</a>
-      <a href="#participa" class="hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Participa</a>
+      {links.map((link) => (
+        <a href={link.href} class="hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">{link.label}</a>
+      ))}
     </div>
 
     <!-- Botón Derecho -->
