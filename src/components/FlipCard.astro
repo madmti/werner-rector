@@ -9,7 +9,7 @@ const { class: className = "", as: Tag = "button" } = Astro.props;
 
 <Tag
   type={Tag === "button" ? "button" : undefined}
-  class:list={["flip-card group relative w-full cursor-pointer rounded-2xl shadow-xl", className]}
+  class:list={["flip-card group relative w-full cursor-pointer rounded-2xl hover:scale-105 hover:shadow-2xl transition-all shadow-xl", className]}
   aria-pressed="false"
 >
   <div class="flip-card-inner relative w-full h-full">
