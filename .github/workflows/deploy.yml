@@ -29,6 +29,8 @@ jobs:
 
       - name: 🏗️ Build Astro Site
         run: bun run build
+        env:
+          ENABLE_ROLLUP_VISUALIZER: "false"
 
       - name: 🚀 Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
