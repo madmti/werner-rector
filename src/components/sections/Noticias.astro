@@ -4,6 +4,8 @@ import NewsCard from "@/components/NewsCard.astro";
 import { fetchPosts } from "@/lib/sanity";
 
 const posts = await fetchPosts();
+const visible = posts.slice(0, 5);
+const hidden = posts.slice(5);
 ---
 
 <section class="relative w-full bg-white py-12 md:py-16 lg:py-20" id="noticias">
@@ -18,7 +20,36 @@ const posts = await fetchPosts();
 
     <div id="noticias-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       {posts.length > 0 ? (
-        posts.map((post) => <NewsCard post={post} />)
+        <>
+          {visible.map((post) => <NewsCard post={post} />)}
+
+          {hidden.length > 0 && (
+            <button
+              type="button"
+              id="noticias-ver-mas"
+              class="group flex flex-col h-full w-full text-left overflow-hidden rounded-2xl border border-brand-azul/10 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+            >
+              <div class="aspect-16/10 bg-brand-azul/10 flex items-center justify-center">
+                <span class="flex items-center justify-center w-16 h-16 rounded-full bg-brand-azul/15 text-brand-azul group-hover:bg-brand-azul group-hover:text-white transition-all duration-300">
+                  <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14" />
+                    <path d="M5 12h14" />
+                  </svg>
+                </span>
+              </div>
+              <div class="flex flex-col gap-1 p-6 flex-1 items-center justify-center text-center">
+                <span id="noticias-ver-mas-label" class="text-xl font-bold text-brand-azul leading-tight group-hover:underline">Ver más noticias</span>
+                <span id="noticias-ver-mas-sub" class="text-sm text-gray-600">Mostrar las {hidden.length} noticias restantes</span>
+              </div>
+            </button>
+          )}
+
+          {hidden.map((post) => (
+            <div class="hidden noticia-hidden">
+              <NewsCard post={post} />
+            </div>
+          ))}
+        </>
       ) : (
         <div id="noticias-empty" class="col-span-full flex flex-col items-center justify-center text-center gap-2 py-14 md:py-20">
           <p class="text-xl md:text-2xl font-bold text-brand-azul/60">Próximamente</p>
@@ -30,3 +61,19 @@ const posts = await fetchPosts();
     </div>
   </div>
 </section>
+
+<script>
+  const verMasBtn = document.getElementById('noticias-ver-mas');
+  const verMasLabel = document.getElementById('noticias-ver-mas-label');
+  const verMasSub = document.getElementById('noticias-ver-mas-sub');
+  const hiddenCards = document.querySelectorAll('.noticia-hidden');
+
+  if (verMasBtn && verMasLabel && verMasSub && hiddenCards.length > 0) {
+    verMasBtn.addEventListener('click', () => {
+      const expanded = verMasBtn.classList.toggle('is-expanded');
+      hiddenCards.forEach((card) => card.classList.toggle('hidden', !expanded));
+      verMasLabel.textContent = expanded ? 'Ver menos' : 'Ver más noticias';
+      verMasSub.textContent = expanded ? 'Ocultar las noticias adicionales' : `Mostrar las ${hiddenCards.length} noticias restantes`;
+    });
+  }
+</script>
