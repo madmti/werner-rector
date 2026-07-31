@@ -1,41 +1,83 @@
 ---
-interface Props {
+export interface Props {
   class?: string;
+  as?: keyof HTMLElementTagNameMap;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = "", as: Tag = "button" } = Astro.props;
 ---
 
-<div class={`flip-card group perspective-1000 cursor-pointer ${className}`}>
-  <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d">
-    
-    <div class="flip-card-front absolute w-full h-full backface-hidden">
+<Tag
+  type={Tag === "button" ? "button" : undefined}
+  class:list={["flip-card group relative w-full cursor-pointer", className]}
+  aria-pressed="false"
+>
+  <div class="flip-card-bg absolute inset-0 w-full h-full overflow-hidden">
+    <slot name="background" />
+  </div>
+  <div class="flip-card-inner relative w-full h-full">
+    <div class="flip-card-front absolute inset-0 w-full h-full overflow-hidden">
       <slot name="front" />
     </div>
-
-    <div class="flip-card-back absolute w-full h-full backface-hidden rotate-y-180">
+    <div class="flip-card-back absolute inset-0 w-full h-full overflow-hidden">
       <slot name="back" />
     </div>
-    
   </div>
-</div>
+</Tag>
 
 <style>
-  .perspective-1000 { perspective: 1000px; }
-  .transform-style-3d { transform-style: preserve-3d; }
-  .backface-hidden { backface-visibility: hidden; }
-  .rotate-y-180 { transform: rotateY(180deg); }
-  
-  .is-flipped { transform: rotateY(180deg); }
+  .flip-card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .flip-card-bg {
+    z-index: 0;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front {
+    transform: rotateY(0deg);
+    opacity: 1;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease 0.35s;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-card.flipped .flip-card-front {
+    opacity: 0;
+  }
+
+  .flip-card.flipped .flip-card-back {
+    opacity: 1;
+  }
 </style>
 
-<script>
-  const cards = document.querySelectorAll('.flip-card');
-  
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const inner = card.querySelector('.flip-card-inner');
-      inner?.classList.toggle('is-flipped');
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.flip-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const isFlipped = card.classList.toggle('flipped');
+        card.setAttribute('aria-pressed', String(isFlipped));
+      });
     });
   });
 </script>
