@@ -1,14 +1,14 @@
 ---
 import { Image } from 'astro:assets';
-import backgroundImg from '../assets/Hero/background.png';
-import wFondo from '../assets/Hero/w_werner@4x.png';
+import backgroundImg from '../assets/Hero/background.webp';
+import wFondo from '../assets/Hero/w_werner@4x.webp';
 ---
 
 <div class="absolute inset-0">
   <Image
     src={backgroundImg}
     alt="Fondo de Mar"
-    class="absolute inset-0 w-full h-full object-cover z-0"
+    class="absolute inset-0 w-full h-full object-cover z-0 blur-xs scale-105"
   />
   <div class="absolute inset-0 bg-[#181c33]/50 z-1"></div>
   <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-10">
