@@ -5,7 +5,7 @@ import Button from './Button.astro';
 ---
 
 <div class="w-full md:w-[55%] text-left mt-15">
-  <h1 class="text-4xl sm:text-[3.5rem] font-medium text-white leading-[1.1] tracking-tight drop-shadow-lg">
+  <h1 class="hero-reveal text-4xl sm:text-[3.5rem] font-medium text-white leading-[1.1] tracking-tight drop-shadow-lg" style="--reveal-delay: 0.2s">
     Unidos para <span class="font-bold">formar</span>.<br class="hidden sm:inline"/>
     Formar para <span class="font-bold">transformar</span>.
   </h1>
@@ -13,19 +13,43 @@ import Button from './Button.astro';
   <Image
     src={lineaUsm}
     alt="Línea tricolor"
-    class="w-full max-w-70 h-auto mt-5 mb-5 drop-shadow-sm"
+    class="hero-reveal w-full max-w-70 h-auto mt-5 mb-5 drop-shadow-sm"
+    style="--reveal-delay: 0.35s"
   />
 
-  <h2 class="text-base sm:text-xl text-white italic font-light mb-5 drop-shadow-md">
+  <h2 class="hero-reveal text-base sm:text-xl text-white italic font-light mb-5 drop-shadow-md" style="--reveal-delay: 0.5s">
     Porque somos todos sansanos
   </h2>
 
-  <p class="text-white/95 text-sm sm:text-base text-justify sm:text-left mb-7 leading-relaxed font-medium drop-shadow-md">
+  <p class="hero-reveal text-white/95 text-sm sm:text-base text-justify sm:text-left mb-7 leading-relaxed font-medium drop-shadow-md" style="--reveal-delay: 0.65s">
     La Universidad Técnica Federico Santa María tiene todo para liderar el desarrollo tecnológico de Chile. Nuestra excelencia académica y compromiso con el futuro nos impulsan a una nueva etapa de liderazgo institucional.
   </p>
 
-  <div class="flex flex-wrap gap-4">
+  <div class="hero-reveal flex flex-wrap gap-4" style="--reveal-delay: 0.8s">
     <Button variant="outlined" href="#werner" class="drop-shadow-md">Conoce a Werner</Button>
     <Button variant="normal" href="#programa" class="drop-shadow-md">Explora nuestras propuestas</Button>
   </div>
 </div>
+
+<style>
+  @keyframes hero-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-reveal {
+    animation: hero-reveal 1s ease-out var(--reveal-delay, 0.2s) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-reveal {
+      animation: none;
+    }
+  }
+</style>
