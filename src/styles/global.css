@@ -12,8 +12,12 @@ body {
   font-style: normal;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @media (max-width: 640px) {
-  body {
+body {
     padding: 0;
     height: 100dvh;
     width: 100vw;
