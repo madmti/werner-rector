@@ -51,7 +51,7 @@ const cards = [
   <div class="relative overflow-hidden flex items-center min-h-[50vh] lg:min-h-screen">
     <img id="werner-left-image" src={defaultImage} alt="" class="absolute inset-0 w-full h-full object-cover object-[80%]" />
     <div class="absolute inset-0 bg-linear-to-r from-black/50 via-black/20 to-transparent" />
-    <div class="relative z-10 px-6 md:px-12 lg:px-16 py-12 lg:py-0">
+    <div class="relative z-10 px-6 sm:px-8 lg:px-12 py-12 lg:py-0">
       <Badge text="Werner" />
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-wide mt-4">
         Conoce a<br />Werner Creixell
@@ -60,7 +60,7 @@ const cards = [
   </div>
 
   <!-- RIGHT: master–detail list -->
-  <div class="flex flex-col justify-center gap-3 px-6 md:px-12 lg:px-16 py-12 lg:py-0 bg-white" id="werner-list">
+  <div class="flex flex-col justify-center gap-3 px-6 sm:px-8 lg:px-12 py-12 lg:py-0 bg-white" id="werner-list">
     {
       cards.map((card, i) => (
         <div class="werner-wrap grid transition-all duration-500" style="grid-template-rows: 1fr;">
