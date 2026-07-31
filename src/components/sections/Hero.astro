@@ -1,63 +1,22 @@
 ---
 import { Image } from 'astro:assets';
-import wernerSolo from '../../assets/Hero/wener_solo.png'; 
-import wFondo from '../../assets/Hero/w_werner@4x.png';
-import lineaUsm from '../../assets/Hero/linea_usm.png';
-import Button from '../Button.astro';
+import wernerSolo from '../../assets/Hero/wener_solo.png';
+import HeroBackground from '../HeroBackground.astro';
+import HeroContent from '../HeroContent.astro';
 ---
 
-<section class="relative min-h-[100dvh] w-full overflow-hidden bg-gradient-to-br from-[#00315c] to-[#001f3b] flex items-center">
-  
-  <!-- TODO: Agregar imagen de fondo porque creo que no la subieron al drive  -->
+<section class="relative min-h-dvh w-full overflow-hidden flex items-center">
+  <HeroBackground />
 
-  <div class="absolute inset-0 w-full h-full z-10 flex justify-center items-center pointer-events-none">
-    <Image 
-      src={wFondo} 
-      alt="W de fondo" 
-      class="w-[120%] md:w-[70%] max-w-[1200px] h-auto object-contain opacity-[0.12]"      
+  <div class="relative z-30 w-full max-w-300 mx-auto px-6 sm:px-8 pt-0 md:pt-32 pb-24 flex flex-col md:flex-row items-center justify-end md:justify-start h-full min-h-dvh">
+    <HeroContent />
+  </div>
+
+  <div class="absolute z-20 pointer-events-none overflow-hidden h-screen flex items-center">
+    <Image
+      src={wernerSolo}
+      alt="Werner Creixell"
+      class="h-[110vh] md:h-[180vh] object-cover md:translate-x-[20vw] drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]"
     />
   </div>
-
-  <div class="relative z-20 w-full max-w-[1200px] mx-auto px-6 sm:px-8 pt-32 pb-24 flex flex-col md:flex-row items-center justify-between h-full min-h-[100dvh]">
-    
-    <div class="w-full md:w-[55%] text-left z-30 mt-6 lg:mt-15">
-      
-      <h1 class="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-medium text-white leading-[1.1] tracking-tight drop-shadow-lg">
-        Unidos para <span class="font-bold">formar</span>.<br/>
-        Formar para <span class="font-bold">transformar</span>.
-      </h1>
-      
-      <!-- TODO: Cambiar imagen PNG por un SVG, no supe construir el svg -->
-      <Image 
-        src={lineaUsm} 
-        alt="Línea tricolor" 
-        class="w-full max-w-[280px] h-auto mt-5 mb-5 drop-shadow-sm" 
-      />
-      
-      <h2 class="text-lg md:text-xl text-white italic font-light mb-5 drop-shadow-md">
-        Porque somos todos sansanos
-      </h2>
-      
-      <p class="text-white/95 text-[15px] md:text-base mb-7 leading-relaxed font-medium drop-shadow-md">
-        La Universidad Técnica Federico Santa María tiene todo<br class="hidden md:inline"/>
-        para liderar el desarrollo tecnológico de Chile. Nuestra<br class="hidden md:inline"/>
-        excelencia académica y compromiso con el futuro nos<br class="hidden md:inline"/>
-        impulsan a una nueva etapa de liderazgo institucional.
-      </p>
-      
-      <div class="flex flex-wrap gap-4">
-        <Button variant="outlined" href="#conoce" class="drop-shadow-md">Conoce a Werner</Button>
-        <Button variant="normal" href="#propuestas" class="drop-shadow-md">Explora nuestras propuestas</Button>
-      </div>
-    </div>
-  </div>
-
-  <div class="absolute bottom-0 -right-10 md:-right-24 lg:-right-[35%] z-20 pointer-events-none">
-     <Image 
-       src={wernerSolo} 
-       alt="Werner Creixell" 
-       class="w-auto h-[100vh] md:h-[135vh] lg:h-[180vh] max-w-none object-contain object-bottom drop-shadow-[0_0_40px_rgba(255,255,255,0.5)] translate-y-[12%] md:translate-y-[20%] lg:translate-y-[26%]"
-     />
-  </div>
-  
 </section>

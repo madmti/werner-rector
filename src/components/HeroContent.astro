@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import lineaUsm from '../assets/Hero/linea_usm.png';
+import Button from './Button.astro';
+---
+
+<div class="w-full md:w-[55%] text-left mt-15">
+  <h1 class="text-[2.5rem] sm:text-[3.5rem] font-medium text-white leading-[1.1] tracking-tight drop-shadow-lg">
+    Unidos para <span class="font-bold">formar</span>.<br class="hidden sm:inline"/>
+    Formar para <span class="font-bold">transformar</span>.
+  </h1>
+
+  <Image
+    src={lineaUsm}
+    alt="Línea tricolor"
+    class="w-full max-w-70 h-auto mt-5 mb-5 drop-shadow-sm"
+  />
+
+  <h2 class="text-base sm:text-xl text-white italic font-light mb-5 drop-shadow-md">
+    Porque somos todos sansanos
+  </h2>
+
+  <p class="text-white/95 text-sm sm:text-base text-justify sm:text-left mb-7 leading-relaxed font-medium drop-shadow-md">
+    La Universidad Técnica Federico Santa María tiene todo para liderar el desarrollo tecnológico de Chile. Nuestra excelencia académica y compromiso con el futuro nos impulsan a una nueva etapa de liderazgo institucional.
+  </p>
+
+  <div class="flex flex-wrap gap-4">
+    <Button variant="outlined" href="#conoce" class="drop-shadow-md">Conoce a Werner</Button>
+    <Button variant="normal" href="#propuestas" class="drop-shadow-md">Explora nuestras propuestas</Button>
+  </div>
+</div>
