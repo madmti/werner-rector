@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Badge from "@/components/Badge.astro";
-import lineaUsm from "@/assets/Hero/linea_usm.png";
+import lineaUsm from "@/assets/Hero/linea_usm.webp";
 ---
 
 <section class="relative w-full bg-brand-azul py-8 md:py-10 lg:py-12" id="programa">
@@ -9,8 +9,8 @@ import lineaUsm from "@/assets/Hero/linea_usm.png";
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       <!-- Título -->
       <div class="flex flex-col gap-3">
-        <Badge text="Programa" variant="blanca" />
-        <h2 class="text-5xl sm:text-6xl md:text-7xl text-white leading-[1.05] tracking-tight">
+        <div data-reveal><Badge text="Programa" variant="blanca" /></div>
+        <h2 class="text-5xl sm:text-6xl md:text-7xl text-white leading-[1.05] tracking-tight" data-reveal style="--reveal-delay: 0.1s">
           <span class="font-normal">Programa</span><br />
           <span class="font-bold">de rectoría</span>
         </h2>
@@ -19,25 +19,29 @@ import lineaUsm from "@/assets/Hero/linea_usm.png";
           src={lineaUsm}
           alt="Línea tricolor"
           class="w-full max-w-[260px] h-auto mt-1"
+          data-reveal
+          style="--reveal-delay: 0.2s"
         />
 
-        <p class="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-amarillo leading-tight">
+        <p class="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-amarillo leading-tight" data-reveal style="--reveal-delay: 0.3s">
           2026-2030
         </p>
       </div>
 
       <!-- Texto y botón -->
       <div class="flex flex-col gap-4 lg:pt-4">
-        <p class="text-lg sm:text-xl md:text-2xl text-white font-bold leading-snug">
+        <p class="text-lg sm:text-xl md:text-2xl text-white font-bold leading-snug" data-reveal style="--reveal-delay: 0.15s">
           Una UTFSM de excelencia para Chile y el mundo.
         </p>
-        <p class="text-base sm:text-lg text-white/90 leading-relaxed">
+        <p class="text-base sm:text-lg text-white/90 leading-relaxed" data-reveal style="--reveal-delay: 0.3s">
           Conoce la visión que inspira esta candidatura y las propuestas para fortalecer el liderazgo académico, transformar la formación y proyectar la Universidad hacia su segundo siglo.
         </p>
 
         <a
           href="/programa.pdf"
           class="inline-flex items-center justify-center gap-2 self-start bg-white text-brand-azul font-bold px-6 py-3 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg"
+          data-reveal
+          style="--reveal-delay: 0.45s"
         >
           Descarga el programa
           <svg

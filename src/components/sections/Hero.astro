@@ -1,22 +1,80 @@
 ---
-import { Image } from 'astro:assets';
-import wernerSolo from '../../assets/Hero/wener_solo.png';
+import { getImage } from 'astro:assets';
+import wernerSolo from '../../assets/Hero/werner.webp';
 import HeroBackground from '../HeroBackground.astro';
 import HeroContent from '../HeroContent.astro';
+
+const wernerSoloFull = await getImage({ src: wernerSolo, widths: [480, 800, 1277], sizes: '(min-width: 768px) 50vw, 100vw' });
+const wernerSoloPlaceholder = await getImage({ src: wernerSolo, width: 600, quality: 20 });
 ---
 
-<section class="relative min-h-dvh w-full overflow-hidden flex items-center">
+<section class="relative min-h-dvh w-full overflow-hidden flex items-center justify-center">
   <HeroBackground />
 
   <div class="relative z-30 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-0 md:pt-32 pb-24 flex flex-col md:flex-row items-center justify-end md:justify-start h-full min-h-dvh">
     <HeroContent />
   </div>
 
-  <div class="absolute z-20 pointer-events-none overflow-hidden h-screen flex items-end sm:items-center">
-    <Image
-      src={wernerSolo}
-      alt="Werner Creixell"
-      class="h-[110vh] md:h-[180vh] object-cover md:translate-x-[20vw] drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]"
-    />
+  <div class="absolute md:translate-x-[20vw] bottom-[-20vh] z-20 pointer-events-none h-screen flex items-end">
+    <div class="relative h-[95vh] sm:w-150 aspect-1277/2065 lqip-group">
+      <img
+        src={wernerSoloPlaceholder.src}
+        alt="Werner Creixell"
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover blur-lg lqip-hide"
+      />
+      <img
+        src={wernerSoloFull.src}
+        srcset={wernerSoloFull.srcSet.attribute}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        alt="Werner Creixell"
+        width={wernerSoloFull.attributes.width}
+        height={wernerSoloFull.attributes.height}
+        loading="eager"
+        decoding="sync"
+        fetchpriority="high"
+        class="absolute inset-0 w-full h-full object-cover drop-shadow-[0_0_40px_rgba(255,255,255,0.5)] lqip-reveal"
+      />
+    </div>
   </div>
 </section>
+
+<style>
+  .lqip-group {
+    --lqip-delay: 0.2s;
+    --lqip-duration: 1s;
+  }
+
+  @keyframes lqip-reveal {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes lqip-hide {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .lqip-reveal {
+    animation: lqip-reveal var(--lqip-duration, 1s) ease-out var(--lqip-delay, 0.2s) both;
+  }
+
+  .lqip-hide {
+    animation: lqip-hide var(--lqip-duration, 1s) ease-in-out var(--lqip-delay, 0.2s) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lqip-reveal,
+    .lqip-hide {
+      animation: none;
+    }
+  }
+</style>

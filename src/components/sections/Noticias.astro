@@ -11,8 +11,8 @@ const hidden = posts.slice(5);
 <section class="relative w-full bg-white py-12 md:py-16 lg:py-20" id="noticias">
   <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
     <div class="flex flex-col gap-2 mb-8 lg:mb-10">
-      <Badge text="Noticias" variant="azul" />
-      <h2 class="text-5xl sm:text-6xl md:text-7xl text-brand-azul leading-[0.9] tracking-tight mt-2 flex gap-2 items-center">
+      <div data-reveal><Badge text="Noticias" variant="azul" /></div>
+      <h2 class="text-5xl sm:text-6xl md:text-7xl text-brand-azul leading-[0.9] tracking-tight mt-2 flex gap-2 items-center" data-reveal style="--reveal-delay: 0.1s">
         <span class="font-normal">Últimas</span>
         <span class="font-bold">noticias</span>
       </h2>
@@ -21,9 +21,14 @@ const hidden = posts.slice(5);
     <div id="noticias-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       {posts.length > 0 ? (
         <>
-          {visible.map((post) => <NewsCard post={post} />)}
+          {visible.map((post, i) => (
+            <div data-reveal style={`--reveal-delay: ${0.15 + i * 0.1}s`}>
+              <NewsCard post={post} />
+            </div>
+          ))}
 
           {hidden.length > 0 && (
+            <div data-reveal style={`--reveal-delay: ${0.15 + visible.length * 0.1}s`}>
             <button
               type="button"
               id="noticias-ver-mas"
@@ -42,10 +47,11 @@ const hidden = posts.slice(5);
                 <span id="noticias-ver-mas-sub" class="text-sm text-gray-600">Mostrar las {hidden.length} noticias restantes</span>
               </div>
             </button>
+            </div>
           )}
 
-          {hidden.map((post) => (
-            <div class="hidden noticia-hidden">
+          {hidden.map((post, i) => (
+            <div class="hidden noticia-hidden" data-reveal style={`--reveal-delay: ${0.15 + (visible.length + 1 + i) * 0.1}s`}>
               <NewsCard post={post} />
             </div>
           ))}

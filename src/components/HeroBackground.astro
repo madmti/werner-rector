@@ -1,14 +1,29 @@
 ---
-import { Image } from 'astro:assets';
-import backgroundImg from '../assets/Hero/background.png';
-import wFondo from '../assets/Hero/w_werner@4x.png';
+import { getImage, Image } from 'astro:assets';
+import backgroundImg from '../assets/Hero/background.webp';
+import wFondo from '../assets/Hero/w_werner@4x.webp';
+
+const backgroundFull = await getImage({ src: backgroundImg, widths: [480, 800, 1200, 1600], sizes: '100vw' });
+const backgroundPlaceholder = await getImage({ src: backgroundImg, width: 32, quality: 20 });
 ---
 
 <div class="absolute inset-0">
-  <Image
-    src={backgroundImg}
+  <img
+    src={backgroundPlaceholder.src}
+    alt=""
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover z-0 blur-lg scale-110"
+  />
+  <img
+    src={backgroundFull.src}
+    srcset={backgroundFull.srcSet.attribute}
+    sizes="100vw"
     alt="Fondo de Mar"
-    class="absolute inset-0 w-full h-full object-cover z-0"
+    width={backgroundFull.attributes.width}
+    height={backgroundFull.attributes.height}
+    loading="lazy"
+    decoding="async"
+    class="absolute inset-0 w-full h-full object-cover z-0 blur-xs scale-105 lqip-reveal"
   />
   <div class="absolute inset-0 bg-[#181c33]/50 z-1"></div>
   <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-10">
@@ -19,3 +34,24 @@ import wFondo from '../assets/Hero/w_werner@4x.png';
     />
   </div>
 </div>
+
+<style>
+  @keyframes lqip-reveal {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .lqip-reveal {
+    animation: lqip-reveal 1s ease-out 0.2s both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lqip-reveal {
+      animation: none;
+    }
+  }
+</style>

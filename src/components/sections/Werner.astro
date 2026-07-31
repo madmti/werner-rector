@@ -1,10 +1,13 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import Badge from '@/components/Badge.astro';
-import bgImg from '@/assets/Werner/IMG_0211,.1.png';
-import iconAzul from '@/assets/icons/W fondo azul.png';
+import bgImg from '@/assets/Werner/IMG_0211,.1.webp';
+import iconAzul from '@/assets/icons/W fondo azul.webp';
 
-const defaultImage = bgImg.src;
+const bgFull = await getImage({ src: bgImg, widths: [480, 800, 1200, 1600], sizes: '(min-width: 1024px) 50vw, 100vw' });
+const bgPlaceholder = await getImage({ src: bgImg, width: 32, quality: 20 });
+
+const defaultImage = bgFull.src;
 
 const cards = [
   {
@@ -49,18 +52,35 @@ const cards = [
 <section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen" id="werner">
   <!-- LEFT: background image + overlay + text -->
   <div class="relative overflow-hidden flex items-center min-h-[50vh] lg:min-h-screen">
-    <img id="werner-left-image" src={defaultImage} alt="" class="absolute inset-0 w-full h-full object-cover object-[80%]" />
+    <img
+      src={bgPlaceholder.src}
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover object-[80%] blur-lg scale-110"
+    />
+    <img
+      id="werner-left-image"
+      src={defaultImage}
+      srcset={bgFull.srcSet.attribute}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      alt=""
+      width={bgFull.attributes.width}
+      height={bgFull.attributes.height}
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 w-full h-full object-cover object-[80%]"
+    />
     <div class="absolute inset-0 bg-linear-to-r from-black/50 via-black/20 to-transparent" />
     <div class="relative z-10 px-6 sm:px-8 lg:px-12 py-12 lg:py-0 w-full lg:max-w-[640px] lg:ml-auto">
-      <Badge text="Werner" />
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-wide mt-4">
+      <div data-reveal><Badge text="Werner" /></div>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-wide mt-4" data-reveal style="--reveal-delay: 0.1s">
         Conoce a<br />Werner Creixell
       </h1>
     </div>
   </div>
 
   <!-- RIGHT: master–detail list -->
-  <div class="flex flex-col justify-center gap-3 px-6 sm:px-8 lg:px-12 py-12 lg:py-0 bg-white lg:max-w-[640px] lg:mr-auto" id="werner-list">
+  <div class="flex flex-col justify-center gap-3 px-6 sm:px-8 lg:px-12 py-12 lg:py-0 bg-white lg:max-w-[640px] lg:mr-auto" id="werner-list" data-reveal style="--reveal-delay: 0.2s">
     {
       cards.map((card, i) => (
         <div class="werner-wrap grid transition-all duration-500" style="grid-template-rows: 1fr;">
@@ -70,7 +90,7 @@ const cards = [
                 class="werner-header group flex items-center gap-3 w-full rounded-full border border-brand-azul/15 py-3 pr-5 pl-2 bg-white/80 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-brand-azul/30 active:bg-brand-azul active:text-white active:border-brand-azul"
               >
                 <span class="icon-container w-12 h-12 rounded-full bg-brand-azul/10 flex items-center justify-center shrink-0 group-active:bg-white/20 transition-colors">
-                  <Image src={iconAzul} alt="" class="w-12 h-12 object-contain" />
+                  <Image src={iconAzul} alt="" class="w-12 h-12 object-contain" widths={[96, 192]} sizes="48px" />
                 </span>
                 <span class="title-text font-bold text-brand-azul text-base flex-1 group-active:text-white transition-colors">
                   {card.title}

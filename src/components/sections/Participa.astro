@@ -1,7 +1,10 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import Badge from '@/components/Badge.astro';
-import fondoParticipa from '@/assets/Participa/Busto federico.png';
+import fondoParticipa from '@/assets/Participa/Busto federico.webp';
+
+const fondoFull = await getImage({ src: fondoParticipa, widths: [480, 800, 1200], sizes: '100vw' });
+const fondoPlaceholder = await getImage({ src: fondoParticipa, width: 32, quality: 20 });
 import instagramIcon from '@/assets/icons/instagram.svg';
 import linkedinIcon from '@/assets/icons/linkedin.svg';
 import gmailIcon from '@/assets/icons/gmail.svg';
@@ -12,9 +15,21 @@ const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
 ---
 
 <section class="relative min-h-screen flex items-center overflow-hidden bg-[#181c33]" id="participa">
-  <Image
-    src={fondoParticipa}
+  <img
+    src={fondoPlaceholder.src}
+    alt=""
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover object-top-left max-sm:object-[20%_center] blur-lg scale-110 opacity-50"
+  />
+  <img
+    src={fondoFull.src}
+    srcset={fondoFull.srcSet.attribute}
+    sizes="100vw"
     alt="Busto Federico Santa María"
+    width={fondoFull.attributes.width}
+    height={fondoFull.attributes.height}
+    loading="lazy"
+    decoding="async"
     class="absolute inset-0 w-full h-full object-cover object-top-left max-sm:object-[20%_center] opacity-50"
   />
 
@@ -22,19 +37,19 @@ const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
 
     <!-- Left side -->
     <div class="flex flex-col gap-6 text-white">
-      <Badge text="Participa" variant="blanca" />
+      <div data-reveal><Badge text="Participa" variant="blanca" /></div>
 
-      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-wide flex flex-col">
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-wide flex flex-col" data-reveal style="--reveal-delay: 0.1s">
         Una invitación <span class="text-brand-amarillo">a colaborar</span>
       </h2>
 
-      <p class="text-lg md:text-xl leading-relaxed max-w-lg">
+      <p class="text-lg md:text-xl leading-relaxed max-w-lg" data-reveal style="--reveal-delay: 0.2s">
         Te invitamos a construir juntos una Universidad más integrada, moderna,
         exigente y conectada con los desafíos del siglo XXI, sin perder nunca
         el sello humano y el sentido de misión que nos legó Federico Santa María.
       </p>
 
-      <div class="flex gap-4 mt-2">
+      <div class="flex gap-4 mt-2" data-reveal style="--reveal-delay: 0.3s">
         <a
           href="https://www.instagram.com/wernercreixell.rector/"
           target="_blank"
@@ -64,7 +79,7 @@ const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
     </div>
 
     <!-- Right side - Email form -->
-    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20" data-reveal style="--reveal-delay: 0.15s">
       <h3 class="text-2xl font-bold text-white mb-6">¡Manda un mensaje!</h3>
       <form id="participa-form" class="space-y-4">
         <div>
@@ -129,19 +144,38 @@ const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
 <div id="participa-emailjs-config" data-service-id={EMAILJS_SERVICE_ID} data-template-id={EMAILJS_TEMPLATE_ID} data-public-key={EMAILJS_PUBLIC_KEY} class="hidden"></div>
 
 <script>
-  import emailjs from '@emailjs/browser';
-
   const config = document.getElementById('participa-emailjs-config')!;
   const SERVICE_ID = config.dataset.serviceId!;
   const TEMPLATE_ID = config.dataset.templateId!;
   const PUBLIC_KEY = config.dataset.publicKey!;
 
-  emailjs.init(PUBLIC_KEY);
-
   const form = document.getElementById('participa-form') as HTMLFormElement;
   const submitBtn = document.getElementById('participa-submit-btn') as HTMLButtonElement;
   const successMsg = document.getElementById('participa-success') as HTMLElement;
   const errorMsg = document.getElementById('participa-error') as HTMLElement;
+
+  let emailjsPromise: Promise<typeof import('@emailjs/browser')> | null = null;
+
+  function loadEmailjs() {
+    if (!emailjsPromise) {
+      emailjsPromise = import('@emailjs/browser').then((m) => {
+        m.init(PUBLIC_KEY);
+        return m;
+      });
+    }
+    return emailjsPromise;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        loadEmailjs();
+        observer.disconnect();
+      }
+    },
+    { rootMargin: '200px' },
+  );
+  observer.observe(form);
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -149,6 +183,7 @@ const EMAILJS_PUBLIC_KEY = "xTlgBRVO-eafZbMrV";
     submitBtn.textContent = 'Enviando...';
 
     try {
+      const emailjs = await loadEmailjs();
       await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form);
       successMsg.classList.remove('hidden');
       errorMsg.classList.add('hidden');
