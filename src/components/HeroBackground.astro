@@ -1,13 +1,26 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import backgroundImg from '../assets/Hero/background.webp';
 import wFondo from '../assets/Hero/w_werner@4x.webp';
+
+const backgroundFull = await getImage({ src: backgroundImg, width: 1600 });
+const backgroundPlaceholder = await getImage({ src: backgroundImg, width: 32, quality: 20 });
 ---
 
 <div class="absolute inset-0">
-  <Image
-    src={backgroundImg}
+  <img
+    src={backgroundPlaceholder.src}
+    alt=""
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover z-0 blur-lg scale-110"
+  />
+  <img
+    src={backgroundFull.src}
     alt="Fondo de Mar"
+    width={backgroundFull.attributes.width}
+    height={backgroundFull.attributes.height}
+    loading="lazy"
+    decoding="async"
     class="absolute inset-0 w-full h-full object-cover z-0 blur-xs scale-105"
   />
   <div class="absolute inset-0 bg-[#181c33]/50 z-1"></div>

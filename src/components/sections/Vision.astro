@@ -1,7 +1,10 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import Badge from "@/components/Badge.astro";
 import campusImg from "@/assets/Vision/Collages USM 2.webp";
+
+const campusFull = await getImage({ src: campusImg, width: 1600 });
+const campusPlaceholder = await getImage({ src: campusImg, width: 32, quality: 20 });
 
 const items = [
   "Liderazgo académico que inspira excelencia",
@@ -14,9 +17,19 @@ const items = [
   <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[700px]">
     <!-- Lado imagen -->
     <div class="relative overflow-hidden min-h-[400px] lg:min-h-full flex items-center z-10">
-      <Image
-        src={campusImg}
+      <img
+        src={campusPlaceholder.src}
+        alt=""
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover object-[60%_center] blur-lg scale-110"
+      />
+      <img
+        src={campusFull.src}
         alt="Campus UTFSM"
+        width={campusFull.attributes.width}
+        height={campusFull.attributes.height}
+        loading="lazy"
+        decoding="async"
         class="absolute inset-0 w-full h-full object-cover object-[60%_center]"
       />
       <!-- Overlay azul -->

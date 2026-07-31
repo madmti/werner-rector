@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import Badge from "@/components/Badge.astro";
 import FlipCard from "@/components/FlipCard.astro";
 import bgImg from "@/assets/Pilares/width_800.webp";
@@ -7,7 +7,11 @@ import imgProfesorado from "@/assets/Pilares/1.webp";
 import imgFormacion from "@/assets/Pilares/2.webp";
 import imgComunidad from "@/assets/Pilares/3.webp";
 
-const pilares = [
+const bgFull = await getImage({ src: bgImg, width: 1600 });
+const bgPlaceholder = await getImage({ src: bgImg, width: 32, quality: 20 });
+
+const pilares = [];
+for (const p of [
   {
     title: "Liderazgo del Profesorado",
     body: "El liderazgo académico debe orientar el futuro de la Universidad. Fortaleceremos el desarrollo del profesorado, la investigación y una gestión institucional que facilite su labor.",
@@ -26,14 +30,28 @@ const pilares = [
     image: imgComunidad,
     color: "#004b85",
   },
-];
+]) {
+  const full = await getImage({ src: p.image });
+  const placeholder = await getImage({ src: p.image, width: 32, quality: 20 });
+  pilares.push({ ...p, full, placeholder });
+}
 ---
 
 <section class="relative w-full flex items-center overflow-hidden" id="pilares">
   <!-- Fondo -->
-  <Image
-    src={bgImg}
+  <img
+    src={bgPlaceholder.src}
+    alt=""
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover blur-lg scale-110"
+  />
+  <img
+    src={bgFull.src}
     alt="Campus UTFSM"
+    width={bgFull.attributes.width}
+    height={bgFull.attributes.height}
+    loading="lazy"
+    decoding="async"
     class="absolute inset-0 w-full h-full object-cover"
   />
   <!-- Overlay -->
@@ -59,9 +77,19 @@ const pilares = [
           <!-- Frente -->
           <div slot="front" class="relative w-full h-full flex items-end p-6 md:p-8 rounded-2xl overflow-hidden">
             <!-- Fondo de tarjeta -->
-            <Image
-              src={pilar.image}
+            <img
+              src={pilar.placeholder.src}
+              alt=""
+              aria-hidden="true"
+              class="absolute inset-0 w-full h-full object-cover blur-lg scale-110"
+            />
+            <img
+              src={pilar.full.src}
               alt={pilar.title}
+              width={pilar.full.attributes.width}
+              height={pilar.full.attributes.height}
+              loading="lazy"
+              decoding="async"
               class="absolute inset-0 w-full h-full object-cover"
             />
             <!-- Gradiente frontal -->
@@ -85,9 +113,19 @@ const pilares = [
             class="relative w-full h-full flex flex-col justify-center p-6 md:p-8 rounded-2xl overflow-hidden"
           >
             <!-- Fondo de tarjeta reverso -->
-            <Image
-              src={pilar.image}
+            <img
+              src={pilar.placeholder.src}
+              alt=""
+              aria-hidden="true"
+              class="absolute inset-0 w-full h-full object-cover blur-lg scale-110"
+            />
+            <img
+              src={pilar.full.src}
               alt={pilar.title}
+              width={pilar.full.attributes.width}
+              height={pilar.full.attributes.height}
+              loading="lazy"
+              decoding="async"
               class="absolute inset-0 w-full h-full object-cover"
             />
             <div

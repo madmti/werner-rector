@@ -1,10 +1,13 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import Badge from '@/components/Badge.astro';
 import bgImg from '@/assets/Werner/IMG_0211,.1.webp';
 import iconAzul from '@/assets/icons/W fondo azul.webp';
 
-const defaultImage = bgImg.src;
+const bgFull = await getImage({ src: bgImg, width: 1600 });
+const bgPlaceholder = await getImage({ src: bgImg, width: 32, quality: 20 });
+
+const defaultImage = bgFull.src;
 
 const cards = [
   {
@@ -49,7 +52,22 @@ const cards = [
 <section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen" id="werner">
   <!-- LEFT: background image + overlay + text -->
   <div class="relative overflow-hidden flex items-center min-h-[50vh] lg:min-h-screen">
-    <img id="werner-left-image" src={defaultImage} alt="" class="absolute inset-0 w-full h-full object-cover object-[80%]" />
+    <img
+      src={bgPlaceholder.src}
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover object-[80%] blur-lg scale-110"
+    />
+    <img
+      id="werner-left-image"
+      src={defaultImage}
+      alt=""
+      width={bgFull.attributes.width}
+      height={bgFull.attributes.height}
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 w-full h-full object-cover object-[80%]"
+    />
     <div class="absolute inset-0 bg-linear-to-r from-black/50 via-black/20 to-transparent" />
     <div class="relative z-10 px-6 sm:px-8 lg:px-12 py-12 lg:py-0 w-full lg:max-w-[640px] lg:ml-auto">
       <Badge text="Werner" />

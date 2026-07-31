@@ -1,8 +1,11 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import wernerSolo from '../../assets/Hero/wener_solo.webp';
 import HeroBackground from '../HeroBackground.astro';
 import HeroContent from '../HeroContent.astro';
+
+const wernerSoloFull = await getImage({ src: wernerSolo });
+const wernerSoloPlaceholder = await getImage({ src: wernerSolo, width: 500, quality: 20 });
 ---
 
 <section class="relative min-h-dvh w-full overflow-hidden flex items-center">
@@ -13,10 +16,23 @@ import HeroContent from '../HeroContent.astro';
   </div>
 
   <div class="absolute z-20 pointer-events-none overflow-hidden h-screen flex items-end sm:items-center">
-    <Image
-      src={wernerSolo}
-      alt="Werner Creixell"
-      class="h-[110vh] md:h-[180vh] object-cover md:translate-x-[20vw] drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]"
-    />
+    <div class="relative md:translate-x-[20vw]">
+      <img
+        src={wernerSoloPlaceholder.src}
+        alt=""
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover blur-lg scale-110"
+      />
+      <img
+        src={wernerSoloFull.src}
+        alt="Werner Creixell"
+        width={wernerSoloFull.attributes.width}
+        height={wernerSoloFull.attributes.height}
+        loading="eager"
+        decoding="sync"
+        fetchpriority="high"
+        class="w-full h-[110vh] md:h-[180vh] object-cover drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]"
+      />
+    </div>
   </div>
 </section>
