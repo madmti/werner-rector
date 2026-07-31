@@ -21,7 +21,7 @@ const backgroundPlaceholder = await getImage({ src: backgroundImg, width: 32, qu
     height={backgroundFull.attributes.height}
     loading="lazy"
     decoding="async"
-    class="absolute inset-0 w-full h-full object-cover z-0 blur-xs scale-105"
+    class="absolute inset-0 w-full h-full object-cover z-0 blur-xs scale-105 lqip-reveal"
   />
   <div class="absolute inset-0 bg-[#181c33]/50 z-1"></div>
   <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-10">
@@ -32,3 +32,24 @@ const backgroundPlaceholder = await getImage({ src: backgroundImg, width: 32, qu
     />
   </div>
 </div>
+
+<style>
+  @keyframes lqip-reveal {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .lqip-reveal {
+    animation: lqip-reveal 1s ease-out 0.2s both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lqip-reveal {
+      animation: none;
+    }
+  }
+</style>
