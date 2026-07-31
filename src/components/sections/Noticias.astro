@@ -1,5 +1,9 @@
 ---
 import Badge from "@/components/Badge.astro";
+import NewsCard from "@/components/NewsCard.astro";
+import { fetchPosts } from "@/lib/sanity";
+
+const posts = await fetchPosts();
 ---
 
 <section class="relative w-full bg-white py-12 md:py-16 lg:py-20" id="noticias">
@@ -13,13 +17,16 @@ import Badge from "@/components/Badge.astro";
     </div>
 
     <div id="noticias-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      <!-- TODO: reemplazar por tarjetas de noticias cuando lleguen los datos de Sanity -->
-      <div id="noticias-empty" class="col-span-full flex flex-col items-center justify-center text-center gap-2 py-14 md:py-20">
-        <p class="text-xl md:text-2xl font-bold text-brand-azul/60">Próximamente</p>
-        <p class="text-base md:text-lg text-brand-azul/40">
-          Pronto compartiremos las noticias de la campaña.
-        </p>
-      </div>
+      {posts.length > 0 ? (
+        posts.map((post) => <NewsCard post={post} />)
+      ) : (
+        <div id="noticias-empty" class="col-span-full flex flex-col items-center justify-center text-center gap-2 py-14 md:py-20">
+          <p class="text-xl md:text-2xl font-bold text-brand-azul/60">Próximamente</p>
+          <p class="text-base md:text-lg text-brand-azul/40">
+            Pronto compartiremos las noticias de la campaña.
+          </p>
+        </div>
+      )}
     </div>
   </div>
 </section>

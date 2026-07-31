@@ -1,0 +1,184 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { Image } from 'astro:assets';
+import { PortableText } from 'astro-portabletext';
+import NewsBodyImage from '@/components/NewsBodyImage.astro';
+import logoRector from '@/assets/Hero/logo_werner_creixell_rector.png';
+import { fetchPost, fetchPosts, urlFor, formatDate } from '@/lib/sanity';
+
+export async function getStaticPaths() {
+  const posts = await fetchPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const post = await fetchPost(slug);
+
+if (!post) {
+  return Astro.redirect('/404') as never;
+}
+
+const components = {
+  type: {
+    image: NewsBodyImage,
+  },
+};
+
+const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(1200).auto('format').url() : undefined;
+---
+
+<MainLayout
+  title={`${post.title} | Werner Creixell`}
+  description={post.excerpt || `${post.title} — Noticias de la campaña de Werner Creixell.`}
+>
+  <div class="min-h-dvh bg-white">
+    <header class="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-6 flex items-center justify-between">
+      <a href="/" class="shrink-0">
+        <Image src={logoRector} alt="Logo Werner Creixell" class="h-10 sm:h-12 w-auto object-contain" />
+      </a>
+      <a
+        href="/#noticias"
+        class="inline-flex items-center gap-2 text-brand-azul font-bold hover:text-brand-amarillo transition-colors"
+      >
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        Noticias
+      </a>
+    </header>
+
+    <article class="w-full max-w-3xl mx-auto px-6 sm:px-8 lg:px-12 pb-16 md:pb-24">
+      <header class="flex flex-col gap-4 mb-8">
+        <time class="text-sm font-bold text-brand-amarillo uppercase tracking-wide">
+          {formatDate(post.publishedAt)}
+        </time>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-brand-azul leading-[1.05] tracking-tight">
+          {post.title}
+        </h1>
+        {post.excerpt && <p class="text-lg md:text-xl text-gray-600 leading-relaxed font-medium">{post.excerpt}</p>}
+      </header>
+
+      {mainImageUrl && (
+        <img
+          src={mainImageUrl}
+          alt={post.mainImage?.alt || post.title}
+          width="1200"
+          loading="eager"
+          class="w-full h-auto rounded-2xl shadow-lg mb-10"
+        />
+      )}
+
+      <div class="prose-noticia">
+        <PortableText value={post.body} components={components} />
+      </div>
+    </article>
+  </div>
+</MainLayout>
+
+<style is:global>
+  .prose-noticia {
+    color: #374151;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  .prose-noticia > * + * {
+    margin-top: 1.25em;
+  }
+
+  .prose-noticia h2,
+  .prose-noticia h3,
+  .prose-noticia h4 {
+    color: var(--color-brand-azul);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .prose-noticia h2 {
+    font-size: 1.875rem;
+    margin-top: 1.8em;
+  }
+
+  .prose-noticia h3 {
+    font-size: 1.5rem;
+    margin-top: 1.6em;
+  }
+
+  .prose-noticia h4 {
+    font-size: 1.25rem;
+    margin-top: 1.5em;
+  }
+
+  .prose-noticia strong {
+    color: var(--color-brand-azul);
+  }
+
+  .prose-noticia a {
+    color: var(--color-brand-azul);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+
+  .prose-noticia a:hover {
+    color: var(--color-brand-amarillo);
+  }
+
+  .prose-noticia ul,
+  .prose-noticia ol {
+    padding-left: 1.5em;
+  }
+
+  .prose-noticia ul {
+    list-style: disc;
+  }
+
+  .prose-noticia ol {
+    list-style: decimal;
+  }
+
+  .prose-noticia blockquote {
+    border-left: 4px solid var(--color-brand-amarillo);
+    padding-left: 1.25em;
+    font-style: italic;
+    color: var(--color-brand-azul);
+  }
+
+  .prose-noticia code {
+    background: var(--color-brand-azul);
+    color: white;
+    border-radius: 0.375rem;
+    padding: 0.15em 0.4em;
+    font-size: 0.875em;
+  }
+
+  .prose-noticia pre {
+    background: var(--color-brand-azul);
+    color: white;
+    border-radius: 1rem;
+    padding: 1.25em;
+    overflow-x: auto;
+  }
+
+  .prose-noticia pre code {
+    background: transparent;
+    padding: 0;
+  }
+
+  .prose-noticia hr {
+    border-color: var(--color-brand-azul);
+    opacity: 0.15;
+  }
+</style>
