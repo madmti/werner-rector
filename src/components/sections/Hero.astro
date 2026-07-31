@@ -1,6 +1,22 @@
 ---
+import { Image } from 'astro:assets';
+import wernerSolo from '../../assets/Hero/wener_solo.png';
+import HeroBackground from '../HeroBackground.astro';
+import HeroContent from '../HeroContent.astro';
 ---
 
-<section class="min-h-screen flex items-center justify-center">
-    <h1 class="text-4xl font-bold">Hero</h1>
+<section class="relative min-h-dvh w-full overflow-hidden flex items-center">
+  <HeroBackground />
+
+  <div class="relative z-30 w-full max-w-300 mx-auto px-6 sm:px-8 pt-0 md:pt-32 pb-24 flex flex-col md:flex-row items-center justify-end md:justify-start h-full min-h-dvh">
+    <HeroContent />
+  </div>
+
+  <div class="absolute z-20 pointer-events-none overflow-hidden h-screen flex items-end sm:items-center">
+    <Image
+      src={wernerSolo}
+      alt="Werner Creixell"
+      class="h-[110vh] md:h-[180vh] object-cover md:translate-x-[20vw] drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]"
+    />
+  </div>
 </section>

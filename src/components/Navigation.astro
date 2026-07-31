@@ -1,9 +1,27 @@
 ---
-
+import { Image } from 'astro:assets';
+import logoRector from '../assets/Hero/logo_werner_creixell_rector.png';
+import Button from './Button.astro';
 ---
 
-<nav
-    class="fixed w-screen top-0 z-50 min-h-20 flex items-center justify-center bg-black text-white backdrop-blur"
->
-    <h1 class="text-4xl font-bold">Navegacion</h1>
-</nav>
+<div class="fixed top-6 left-1/2 -translate-x-1/2 w-full max-w-300 px-6 sm:px-8 z-50">
+  <nav class="bg-white/20 backdrop-blur-md border border-white/10 rounded-full pl-6 pr-3 py-1.5 flex items-center justify-between shadow-lg">
+    <!-- Logo -->
+    <a href="/" class="shrink-0">
+      <Image src={logoRector} alt="Logo Werner Creixell" class="h-8 sm:h-12 w-auto object-contain" />
+    </a>
+
+    <!-- Enlaces Centrales -->
+    <div class="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+      <a href="#proposito" class="text-white hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Propósito</a>
+      <a href="#vision" class="text-white hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Visión</a>
+      <a href="#pilares" class="text-white hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Pilares</a>
+      <a href="#werner" class="text-white hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Werner</a>
+      <a href="#participa" class="text-white hover:text-brand-amarillo transition-colors text-lg font-medium tracking-wide drop-shadow-sm">Participa</a>
+    </div>
+
+    <!-- Botón Derecho -->
+    <Button variant="primary" href="#programa" class="px-6 sm:px-8 py-2.5 text-base shadow-md">Programa</Button>
+
+  </nav>
+</div>
