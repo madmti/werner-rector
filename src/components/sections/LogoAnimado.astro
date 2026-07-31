@@ -74,15 +74,15 @@ import CampusData from '@/components/CampusData.astro';
 
 <section class="flex flex-col items-center justify-center bg-white px-4 pb-12 md:pb-16 mt-[-15vh] sm:mt-[-20vh] gap-4 text-center">
   <div class="space-y-1">
-    <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul">
+    <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul" data-reveal>
       Unidos para <strong>formar</strong>
     </p>
-    <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul">
+    <p class="text-3xl md:text-5xl lg:text-[3.5rem] leading-tight text-brand-azul" data-reveal style="--reveal-delay: 0.15s">
       Formar para <strong>transformar</strong>
     </p>
   </div>
-  <Image src={linea} alt="" class="w-3/4 max-w-sm object-contain" style="height: auto" />
-  <p class="text-xl md:text-2xl lg:text-[1.8rem] italic font-light text-brand-azul">
+  <Image src={linea} alt="" class="w-3/4 max-w-sm object-contain" style="height: auto" data-reveal />
+  <p class="text-xl md:text-2xl lg:text-[1.8rem] italic font-light text-brand-azul" data-reveal style="--reveal-delay: 0.3s">
     Porque somos todos sansanos
   </p>
 </section>
