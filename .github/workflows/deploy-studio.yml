@@ -1,0 +1,36 @@
+name: Deploy Sanity Studio
+
+on:
+  workflow_dispatch:
+    inputs:
+      hostname:
+        description: 'Hostname del studio (quedará en https://<hostname>.sanity.studio)'
+        required: true
+        default: 'werner-rector'
+
+concurrency:
+  group: 'studio-deploy'
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: deploy
+    defaults:
+      run:
+        working-directory: sanity-studio/werner-rector
+
+    steps:
+      - name: 📦 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🍞 Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: 🧶 Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: 🚀 Deploy Studio a Sanity
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        run: bun run deploy -- --yes --url "${{ inputs.hostname }}"
