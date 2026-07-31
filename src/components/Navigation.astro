@@ -4,11 +4,11 @@ import logoRector from '../assets/Hero/logo_werner_creixell_rector.png';
 import Button from './Button.astro';
 ---
 
-<div class="fixed top-6 left-1/2 -translate-x-1/2 w-full max-w-[1200px] px-6 sm:px-8 z-50">
-  <nav class="bg-white/20 backdrop-blur-md border border-white/10 rounded-full pl-6 pr-3 py-1.5 flex items-center justify-between shadow-lg">    
+<div class="fixed top-6 left-1/2 -translate-x-1/2 w-full max-w-300 px-6 sm:px-8 z-50">
+  <nav class="bg-white/20 backdrop-blur-md border border-white/10 rounded-full pl-6 pr-3 py-1.5 flex items-center justify-between shadow-lg">
     <!-- Logo -->
-    <a href="/" class="flex-shrink-0">
-      <Image src={logoRector} alt="Logo Werner Creixell" class="h-12 w-auto object-contain" />
+    <a href="/" class="shrink-0">
+      <Image src={logoRector} alt="Logo Werner Creixell" class="h-8 sm:h-12 w-auto object-contain" />
     </a>
 
     <!-- Enlaces Centrales -->
@@ -21,9 +21,7 @@ import Button from './Button.astro';
     </div>
 
     <!-- Botón Derecho -->
-    <div class="hidden md:block">
-      <Button variant="primary" href="#programa" class="!px-8 !py-2.5 !text-base shadow-md">Programa</Button>
-    </div>
-    
+    <Button variant="primary" href="#programa" class="px-6 sm:px-8 py-2.5 text-base shadow-md">Programa</Button>
+
   </nav>
 </div>
