@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://docs.astro.build/en/guides/integrations-guide/sitemap/
 export default defineConfig({
@@ -23,6 +24,12 @@ export default defineConfig({
     ],
 
     vite: {
-        plugins: [tailwindcss()],
+        plugins: [
+            tailwindcss(),
+            visualizer({
+                gzipSize: true,
+                filename: "./reports/bundle-visualizer.html",
+            }),
+        ],
     },
 });
