@@ -12,8 +12,13 @@ import imgInvestigador from '@/assets/Werner/Investigador.webp';
 
 // Helper para optimizar cada imagen repetitivamente
 async function optimizeImage(srcObj: any) {
-  const full = await getImage({ src: srcObj, widths: [800, 1200, 2400], sizes: '(min-width: 1024px) 2400px, 100vw' });
-  const placeholder = await getImage({ src: srcObj, width: 32, quality: 20 });
+  const originalWidth = srcObj?.width ?? 1200;
+  const candidateWidths = [400, 800, 1200, 1920].filter(w => w <= originalWidth);
+  const widths = candidateWidths.length ? candidateWidths : [originalWidth];
+
+  const full = await getImage({ src: srcObj, widths, sizes: '(min-width: 1024px) 50vw, 100vw', quality: 85, format: 'webp' });
+  const placeholder = await getImage({ src: srcObj, width: 32, quality: 20, format: 'webp' });
+  
   return {
     src: full.src,
     srcSet: full.srcSet.attribute,
@@ -68,26 +73,40 @@ const cards = [
 <section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen" id="werner">
   <!-- LEFT: background image + overlay + text -->
   <div class="relative overflow-hidden flex items-center min-h-[50vh] lg:min-h-screen bg-black">
+    
     <img
-      id="werner-left-placeholder"
-      src={optDefault.placeholder}
-      alt=""
-      aria-hidden="true"
-      class="absolute inset-0 w-full h-full object-cover object-[80%] blur-lg scale-110 transition-opacity duration-700 ease-in-out opacity-100"
-    />
-    <img
-      id="werner-left-image"
+      id="bg-werner-default"
       src={optDefault.src}
       srcset={optDefault.srcSet}
       sizes={optDefault.sizes}
       alt=""
       width={optDefault.width}
       height={optDefault.height}
-      loading="lazy"
+      loading="eager"
+      fetchpriority="high"
       decoding="async"
-      class="absolute inset-0 w-full h-full object-cover object-[80%] transition-opacity duration-700 ease-in-out opacity-100"
+      class="werner-bg-layer absolute inset-0 w-full h-full object-cover object-[80%] transition-opacity duration-700 ease-in-out opacity-100"
     />
+
+    {
+      cards.map((card, i) => (
+        <img
+          id={`bg-werner-${i}`}
+          src={card.image.src}
+          srcset={card.image.srcSet}
+          sizes={card.image.sizes}
+          alt=""
+          width={card.image.width}
+          height={card.image.height}
+          loading="lazy"
+          decoding="async"
+          class="werner-bg-layer absolute inset-0 w-full h-full object-cover object-[80%] transition-opacity duration-700 ease-in-out opacity-0"
+        />
+      ))
+    }
+    
     <div class="absolute inset-0 bg-linear-to-r from-black/50 via-black/20 to-transparent pointer-events-none" />
+    
     <div id="werner-title-container" class="relative z-10 px-6 sm:px-8 lg:px-12 py-12 lg:py-0 w-full lg:max-w-[640px] lg:ml-auto transition-all duration-500 opacity-100 translate-y-0">
       <div data-reveal><Badge text="Werner" /></div>
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-wide mt-4 drop-shadow-md" data-reveal style="--reveal-delay: 0.1s">
@@ -179,10 +198,20 @@ const cards = [
   const wraps = list.querySelectorAll('.werner-wrap');
   const items = list.querySelectorAll('.werner-item');
   const bodies = list.querySelectorAll('.werner-body');
-  const leftImage = document.getElementById('werner-left-image');
-  const leftPlaceholder = document.getElementById('werner-left-placeholder');
   const titleContainer = document.getElementById('werner-title-container');
+  const bgLayers = document.querySelectorAll('.werner-bg-layer');
   let activeIndex = -1;
+
+  function updateBackground(index) {
+    const targetId = index === -1 ? 'bg-werner-default' : `bg-werner-${index}`;
+    bgLayers.forEach(bg => {
+      if (bg.id === targetId) {
+        bg.style.opacity = '1';
+      } else {
+        bg.style.opacity = '0';
+      }
+    });
+  }
 
   function closeAll() {
     wraps.forEach(w => (w.style.gridTemplateRows = '1fr'));
@@ -192,6 +221,7 @@ const cards = [
       bodies[i].style.gridTemplateRows = '0fr';
     });
     activeIndex = -1;
+    updateBackground(-1);
   }
 
   function openItem(index) {
@@ -215,21 +245,8 @@ const cards = [
 
     if (titleContainer) titleContainer.classList.add('hide-title');
 
-    const targetSrc = items[index].dataset.src;
-    if (leftImage.getAttribute('src') !== targetSrc) {
-      leftImage.style.opacity = '0';
-      leftPlaceholder.style.opacity = '0';
-
-      setTimeout(() => {
-        leftPlaceholder.src = items[index].dataset.placeholder;
-        leftImage.srcset = items[index].dataset.srcset;
-        leftImage.sizes = items[index].dataset.sizes;
-        leftImage.src = targetSrc;
-
-        leftImage.style.opacity = '1';
-        leftPlaceholder.style.opacity = '1';
-      }, 300);
-    }
+    // Swap background image, srcset, sizes, and placeholder
+    updateBackground(index);
 
     // Show current wrap, collapse all other wraps
     wraps.forEach((wrap, i) => {
