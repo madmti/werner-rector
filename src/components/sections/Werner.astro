@@ -13,8 +13,10 @@ import imgInvestigador from '@/assets/Werner/Investigador.webp';
 // Helper para optimizar cada imagen repetitivamente
 async function optimizeImage(srcObj: any) {
   const originalWidth = srcObj?.width ?? 1200;
+  const MAX_TARGET = 1920;
+  const targetOriginal = Math.min(originalWidth, MAX_TARGET);
   const candidateWidths = [400, 800, 1200, 1920].filter(w => w <= originalWidth);
-  const widths = candidateWidths.length ? candidateWidths : [originalWidth];
+  const widths = Array.from(new Set([...candidateWidths, targetOriginal])).sort((a, b) => a - b);
 
   const full = await getImage({ src: srcObj, widths, sizes: '(min-width: 1024px) 50vw, 100vw', quality: 85, format: 'webp' });
   const placeholder = await getImage({ src: srcObj, width: 32, quality: 20, format: 'webp' });
